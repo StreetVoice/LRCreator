@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRC Creator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>LRC Creator</h1>
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <!-- Add more language options as needed -->
+        </select>
+    </header>
+
+    <main>
+        <section id="file-selection">
+            <h2>Select Audio File</h2>
+            <input type="file" id="audio-file" accept="audio/*">
+        </section>
+
+        <section id="audio-player">
+            <h2>Audio Player</h2>
+            <audio id="audio-element" controls></audio>
+        </section>
+
+        <section id="lyrics-input">
+            <h2>Enter Lyrics</h2>
+            <textarea id="lyrics-textarea" rows="10" cols="50"></textarea>
+        </section>
+
+        <section id="lrc-tagging">
+            <h2>LRC Tagging</h2>
+            <button id="tag-button">This is it</button>
+            <div id="current-line"></div>
+        </section>
+
+        <section id="export">
+            <h2>Export</h2>
+            <button id="export-button" disabled>Give it to me</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 LRC Creator</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
