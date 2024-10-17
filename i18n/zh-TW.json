@@ -1,0 +1,12 @@
+{
+  "title": "LRC 動態歌詞同步產生器",
+  "selectAudio": "選擇音檔",
+  "audioPlayer": "播放器",
+  "enterLyrics": "輸入歌詞",
+  "lrcTagging": "LRC 標記",
+  "thisIsIt": "就是這句",
+  "export": "輸出",
+  "giveItToMe": "輸出給我",
+  "allLinesTagged": "所有歌詞已標記",
+  "footer": "© 2024 StreetVoice"
+}
