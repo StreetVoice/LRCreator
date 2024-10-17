@@ -17,6 +17,7 @@ function init() {
     exportButton.addEventListener('click', exportLRC);
 
     loadSavedData();
+    initI18n();
 }
 
 // Handle file selection
@@ -104,6 +105,74 @@ function loadSavedData() {
     }
     
     updateCurrentLine();
+}
+
+// Initialize i18next
+function initI18n() {
+  i18next
+    .init({
+      lng: 'en', // default language
+      resources: {
+        en: {
+          translation: {} // We'll load this dynamically
+        },
+        zh-TW: {
+          translation: {} // We'll load this dynamically
+        }
+      }
+    })
+    .then(function(t) {
+      updateContent();
+      document.getElementById('language-select').addEventListener('change', changeLanguage);
+    });
+  
+  // Load language files
+  loadLanguageFile('en');
+  loadLanguageFile('zh-TW');
+}
+
+// Load language file
+function loadLanguageFile(lang) {
+  fetch(`i18n/${lang}.json`)
+    .then(response => response.json())
+    .then(data => {
+      i18next.addResourceBundle(lang, 'translation', data, true, true);
+      if (lang === i18next.language) {
+        updateContent();
+      }
+    });
+}
+
+// Change language
+function changeLanguage(event) {
+  i18next.changeLanguage(event.target.value).then(updateContent);
+}
+
+// Update content with new language
+function updateContent() {
+  document.title = i18next.t('title');
+  document.querySelector('h1').textContent = i18next.t('title');
+  document.querySelector('#file-selection h2').textContent = i18next.t('selectAudio');
+  document.querySelector('#audio-player h2').textContent = i18next.t('audioPlayer');
+  document.querySelector('#lyrics-input h2').textContent = i18next.t('enterLyrics');
+  document.querySelector('#lrc-tagging h2').textContent = i18next.t('lrcTagging');
+  tagButton.textContent = i18next.t('thisIsIt');
+  document.querySelector('#export h2').textContent = i18next.t('export');
+  exportButton.textContent = i18next.t('giveItToMe');
+  document.querySelector('footer p').textContent = i18next.t('footer');
+  updateCurrentLine(); // This will translate "All lines tagged" if necessary
+}
+
+// Update the current line display (modified to use i18n)
+function updateCurrentLine() {
+  if (currentLineIndex < lyrics.length) {
+    currentLineDiv.textContent = lyrics[currentLineIndex];
+    tagButton.disabled = false;
+  } else {
+    currentLineDiv.textContent = i18next.t('allLinesTagged');
+    tagButton.disabled = true;
+  }
+  exportButton.disabled = currentLineIndex < lyrics.length;
 }
 
 // Initialize the application when the DOM is fully loaded
