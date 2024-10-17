@@ -1,5 +1,5 @@
 {
-  "title": "LRC Creator",
+  "title": "LRC lyrics creator",
   "selectAudio": "Select Audio File",
   "audioPlayer": "Audio Player",
   "enterLyrics": "Enter Lyrics",
@@ -8,5 +8,5 @@
   "export": "Export",
   "giveItToMe": "Give it to me",
   "allLinesTagged": "All lines tagged",
-  "footer": "© 2024 LRC Creator"
+  "footer": "© 2024 StreetVoice"
 }
