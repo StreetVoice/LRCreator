@@ -102,13 +102,8 @@ function handleExportButtonKeydown(event) {
 }
 
 function handleLyricsInput() {
-    const newLyrics = lyricsTextarea.innerText.split('\n').filter(line => line.trim() !== '');
-    
-    if (newLyrics.length < lyrics.length && currentLineIndex >= newLyrics.length) {
-        currentLineIndex = Math.max(0, newLyrics.length - 1);
-    }
-    
-    lyrics = newLyrics;
+    lyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+    currentLineIndex = 0; // Reset the current line index when lyrics are changed
     updateCurrentLine();
     saveLyrics();
 }
@@ -147,29 +142,15 @@ function updateLyricsTextarea() {
 }
 
 function updateCurrentLine() {
-    const lines = lyricsTextarea.value.split('\n');
-    lyricsTextarea.innerHTML = ''; // Clear the textarea
-
-    lines.forEach((line, index) => {
-        const lineElement = document.createElement('div');
-        lineElement.textContent = line;
-        lineElement.classList.add('lyrics-line');
-        
-        if (index === currentLineIndex) {
-            lineElement.classList.add('current-line');
-        }
-
-        lyricsTextarea.appendChild(lineElement);
-    });
-
     if (currentLineIndex < lyrics.length) {
         currentLineDiv.textContent = lyrics[currentLineIndex];
         tagButton.disabled = false;
+        exportButton.disabled = true;
     } else {
         currentLineDiv.textContent = 'All lines tagged';
         tagButton.disabled = true;
+        exportButton.disabled = false;
     }
-    exportButton.disabled = currentLineIndex < lyrics.length;
     tagButton.setAttribute('aria-label', tagButton.disabled ? 'All lines tagged' : `Tag line: ${currentLineDiv.textContent}`);
     exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
