@@ -1,7 +1,10 @@
 // Global variables
-let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv;
+let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea;
 let lyrics = [];
 let currentLineIndex = 0;
+let wavesurfer;
+let isSeekingAudio = false;
+let isSeekingWave = false;
 
 // Initialize the application
 function init() {
@@ -10,6 +13,7 @@ function init() {
     tagButton = document.getElementById('tag-button');
     exportButton = document.getElementById('export-button');
     currentLineDiv = document.getElementById('current-line');
+    previewArea = document.getElementById('preview-area');
 
     document.getElementById('audio-file').addEventListener('change', handleFileSelect);
     lyricsTextarea.addEventListener('input', handleLyricsInput);
@@ -33,16 +37,55 @@ function initWavesurfer() {
         container: '#waveform',
         waveColor: 'violet',
         progressColor: 'purple',
-        responsive: true
+        responsive: true,
+        interact: true,
     });
 
+    
     wavesurfer.on('ready', function () {
-        audioElement.addEventListener('play', () => wavesurfer.play());
-        audioElement.addEventListener('pause', () => wavesurfer.pause());
-        audioElement.addEventListener('seeked', () => wavesurfer.seekTo(audioElement.currentTime / audioElement.duration));
-        wavesurfer.on('seek', (progress) => {
+        syncPlayback();
+        syncProgress();
+    });
+
+    wavesurfer.on('seek', function(progress) {
+        if (!isSeekingAudio) {
+            isSeekingWave = true;
             audioElement.currentTime = progress * audioElement.duration;
-        });
+            isSeekingWave = false;
+        }
+    });
+}
+
+function syncPlayback() {
+    audioElement.addEventListener('play', () => {
+        if (!wavesurfer.isPlaying()) wavesurfer.play();
+    });
+    audioElement.addEventListener('pause', () => {
+        if (wavesurfer.isPlaying()) wavesurfer.pause();
+    });
+    wavesurfer.on('play', () => {
+        if (audioElement.paused) audioElement.play();
+    });
+    wavesurfer.on('pause', () => {
+        if (!audioElement.paused) audioElement.pause();
+    });
+}
+
+function syncProgress() {
+    audioElement.addEventListener('timeupdate', () => {
+        if (!isSeekingWave) {
+            isSeekingAudio = true;
+            wavesurfer.seekTo(audioElement.currentTime / audioElement.duration);
+            isSeekingAudio = false;
+        }
+    });
+
+    audioElement.addEventListener('seeking', () => {
+        if (!isSeekingWave) {
+            isSeekingAudio = true;
+            wavesurfer.seekTo(audioElement.currentTime / audioElement.duration);
+            isSeekingAudio = false;
+        }
     });
 }
 
