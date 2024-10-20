@@ -176,7 +176,7 @@ function initI18n() {
         en: {
           translation: {} // We'll load this dynamically
         },
-        zh-TW: {
+        'zh-TW': {
           translation: {} // We'll load this dynamically
         }
       }
