@@ -1,5 +1,5 @@
 // Global variables
-let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea;
+let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -14,11 +14,13 @@ function init() {
     exportButton = document.getElementById('export-button');
     currentLineDiv = document.getElementById('current-line');
     previewArea = document.getElementById('preview-area');
+    resetButton = document.getElementById('reset-button')
 
     document.getElementById('audio-file').addEventListener('change', handleFileSelect);
     lyricsTextarea.addEventListener('input', handleLyricsInput);
     tagButton.addEventListener('click', tagCurrentLine);
     exportButton.addEventListener('click', exportLRC);
+    resetButton.addEventListener('click', resetTagging);
 
     // Improve keyboard navigation
     tagButton.addEventListener('keydown', handleTagButtonKeydown);
@@ -122,7 +124,13 @@ function handleFileSelect(event) {
 function handleLyricsInput() {
     lyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
     updateCurrentLine();
+    resetTagging();
     saveLyrics();
+}
+
+function resetTagging() {
+    currentLineIndex = 0;
+    updateCurrentLine();
 }
 
 // Tag the current line with timestamp
@@ -134,7 +142,14 @@ function tagCurrentLine() {
         const milliseconds = Math.floor((currentTime % 1) * 100);
         const timestamp = `[${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}]`;
         
-        lyrics[currentLineIndex] = `${timestamp}${lyrics[currentLineIndex]}`;
+        // Check if the line already has a timestamp
+        if (!/^\[\d{2}:\d{2}\.\d{2}\]/.test(lyrics[currentLineIndex])) {
+            lyrics[currentLineIndex] = `${timestamp}${lyrics[currentLineIndex]}`;
+        } else {
+            // If it does, replace the existing timestamp
+            lyrics[currentLineIndex] = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, timestamp);
+        }
+        
         currentLineIndex++;
         updateLyricsTextarea();
         updateCurrentLine();
@@ -152,13 +167,12 @@ function updateCurrentLine() {
     if (currentLineIndex < lyrics.length) {
         currentLineDiv.textContent = lyrics[currentLineIndex];
         tagButton.disabled = false;
-        tagButton.setAttribute('aria-label', `Tag line: ${lyrics[currentLineIndex]}`);
     } else {
         currentLineDiv.textContent = i18next.t('allLinesTagged');
         tagButton.disabled = true;
-        tagButton.setAttribute('aria-label', 'All lines tagged');
     }
     exportButton.disabled = currentLineIndex < lyrics.length;
+    tagButton.setAttribute('aria-label', tagButton.disabled ? 'All lines tagged' : `Tag line: ${currentLineDiv.textContent}`);
     exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
 
