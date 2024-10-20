@@ -1,12 +1,11 @@
 // Global variables
-let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton;
+let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
 
 // Initialize the application
 function init() {
-    audioElement = document.getElementById('audio-element');
     lyricsTextarea = document.getElementById('lyrics-textarea');
     tagButton = document.getElementById('tag-button');
     exportButton = document.getElementById('export-button');
@@ -23,8 +22,6 @@ function init() {
     tagButton.addEventListener('keydown', handleTagButtonKeydown);
     exportButton.addEventListener('keydown', handleExportButtonKeydown);
 
-    audioElement.addEventListener('error', handleAudioError);
-
     initWavesurfer();
     loadSavedData();
     initI18n();
@@ -37,7 +34,6 @@ function initWavesurfer() {
         progressColor: 'purple',
         responsive: true,
         interact: true,
-        backend: 'MediaElement',
         plugins: [
             WaveSurfer.cursor.create({
                 showTime: true,
@@ -53,24 +49,18 @@ function initWavesurfer() {
     });
 
     wavesurfer.on('ready', function () {
-        wavesurfer.setVolume(0); // Mute wavesurfer to prevent double audio
-        syncWavesurfer();
-    });
-}
+        document.getElementById('playPause').addEventListener('click', function() {
+            wavesurfer.playPause();
+        });
 
-function syncWavesurfer() {
-    audioElement.addEventListener('timeupdate', () => {
-        const currentTime = audioElement.currentTime;
-        const duration = audioElement.duration;
-        if (duration > 0 && !audioElement.paused) {
-            wavesurfer.seekTo(currentTime / duration);
-        }
+        document.getElementById('volume').addEventListener('input', function() {
+            wavesurfer.setVolume(this.value);
+        });
     });
 
-    wavesurfer.on('seek', (position) => {
-        if (audioElement.duration) {
-            audioElement.currentTime = position * audioElement.duration;
-        }
+    wavesurfer.on('error', function(e) {
+        console.error('WaveSurfer error:', e);
+        alert('Error loading audio file. Please try again with a different file.');
     });
 }
 
@@ -88,16 +78,10 @@ function handleExportButtonKeydown(event) {
     }
 }
 
-function handleAudioError() {
-    alert('Error loading audio file. Please try again with a different file.');
-}
-
 function handleFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
         const objectURL = URL.createObjectURL(file);
-        audioElement.src = objectURL;
-        audioElement.load();
         wavesurfer.load(objectURL);
     }
 }
@@ -121,7 +105,7 @@ function resetTagging() {
 
 function tagCurrentLine() {
     if (currentLineIndex < lyrics.length) {
-        const currentTime = audioElement.currentTime;
+        const currentTime = wavesurfer.getCurrentTime();
         const minutes = Math.floor(currentTime / 60);
         const seconds = Math.floor(currentTime % 60);
         const milliseconds = Math.floor((currentTime % 1) * 100);
@@ -249,7 +233,8 @@ function updateContent() {
     document.querySelector('footer p').textContent = i18next.t('footer');
     
     document.getElementById('audio-file').setAttribute('aria-label', i18next.t('selectAudio'));
-    audioElement.setAttribute('aria-label', i18next.t('audioPlayer'));
+    document.getElementById('playPause').setAttribute('aria-label', i18next.t('playPause'));
+    document.getElementById('volume').setAttribute('aria-label', i18next.t('volume'));
     lyricsTextarea.setAttribute('aria-label', i18next.t('enterLyrics'));
     tagButton.setAttribute('aria-label', i18next.t('thisIsIt'));
     exportButton.setAttribute('aria-label', i18next.t('giveItToMe'));
