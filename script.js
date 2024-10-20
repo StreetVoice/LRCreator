@@ -16,8 +16,33 @@ function init() {
     tagButton.addEventListener('click', tagCurrentLine);
     exportButton.addEventListener('click', exportLRC);
 
+    // Improve keyboard navigation
+    tagButton.addEventListener('keydown', handleTagButtonKeydown);
+    exportButton.addEventListener('keydown', handleExportButtonKeydown);
+
+    // Add error handling for file loading
+    audioElement.addEventListener('error', handleAudioError);
+
     loadSavedData();
     initI18n();
+}
+
+function handleTagButtonKeydown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        tagCurrentLine();
+    }
+}
+
+function handleExportButtonKeydown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        exportLRC();
+    }
+}
+
+function handleAudioError() {
+    alert('Error loading audio file. Please try again with a different file.');
 }
 
 // Handle file selection
@@ -63,11 +88,14 @@ function updateCurrentLine() {
     if (currentLineIndex < lyrics.length) {
         currentLineDiv.textContent = lyrics[currentLineIndex];
         tagButton.disabled = false;
+        tagButton.setAttribute('aria-label', `Tag line: ${lyrics[currentLineIndex]}`);
     } else {
-        currentLineDiv.textContent = 'All lines tagged';
+        currentLineDiv.textContent = i18next.t('allLinesTagged');
         tagButton.disabled = true;
+        tagButton.setAttribute('aria-label', 'All lines tagged');
     }
     exportButton.disabled = currentLineIndex < lyrics.length;
+    exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
 
 // Export LRC file
@@ -160,6 +188,14 @@ function updateContent() {
   document.querySelector('#export h2').textContent = i18next.t('export');
   exportButton.textContent = i18next.t('giveItToMe');
   document.querySelector('footer p').textContent = i18next.t('footer');
+    
+  // Update ARIA labels
+  document.getElementById('audio-file').setAttribute('aria-label', i18next.t('selectAudio'));
+  audioElement.setAttribute('aria-label', i18next.t('audioPlayer'));
+  lyricsTextarea.setAttribute('aria-label', i18next.t('enterLyrics'));
+  tagButton.setAttribute('aria-label', i18next.t('thisIsIt'));
+  exportButton.setAttribute('aria-label', i18next.t('giveItToMe'));
+    
   updateCurrentLine(); // This will translate "All lines tagged" if necessary
 }
 
