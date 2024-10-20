@@ -53,9 +53,7 @@ function initWavesurfer() {
     wavesurfer.on('ready', function () {
         console.log('WaveSurfer is ready');
         playPauseButton.disabled = false;
-        document.getElementById('volume').addEventListener('input', function() {
-            wavesurfer.setVolume(this.value);
-        });
+        playPauseButton.textContent = 'Play';
     });
 
     wavesurfer.on('error', function(e) {
@@ -65,6 +63,8 @@ function initWavesurfer() {
 
     wavesurfer.on('loading', function(percent) {
         console.log('Loading audio:', percent + '%');
+        playPauseButton.textContent = 'Loading...';
+        playPauseButton.disabled = true;
     });
 }
 
@@ -75,6 +75,15 @@ function togglePlayPause() {
     } else {
         wavesurfer.play();
         playPauseButton.textContent = 'Pause';
+    }
+}
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        console.log('File selected:', file.name);
+        const objectURL = URL.createObjectURL(file);
+        wavesurfer.load(objectURL);
     }
 }
 
@@ -92,17 +101,6 @@ function handleExportButtonKeydown(event) {
     }
 }
 
-function handleFileSelect(event) {
-    const file = event.target.files[0];
-    if (file) {
-        console.log('File selected:', file.name);
-        const objectURL = URL.createObjectURL(file);
-        wavesurfer.load(objectURL);
-        playPauseButton.disabled = true;
-        playPauseButton.textContent = 'Loading...';
-    }
-}
-
 function handleLyricsInput() {
     const newLyrics = lyricsTextarea.innerText.split('\n').filter(line => line.trim() !== '');
     
@@ -117,7 +115,10 @@ function handleLyricsInput() {
 
 function resetTagging() {
     currentLineIndex = 0;
+    lyrics = lyrics.map(line => line.replace(/^\[\d{2}:\d{2}\.\d{2}\]/, ''));
+    updateLyricsTextarea();
     updateCurrentLine();
+    saveLyrics();
 }
 
 function tagCurrentLine() {
@@ -179,7 +180,7 @@ function exportLRC() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'lyrics.lrc';
+    a.download = 'lyrics.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
