@@ -25,6 +25,7 @@
         <section id="audio-player">
             <h2>Audio Player</h2>
             <audio id="audio-element" controls aria-label="Audio player"></audio>
+            <div id="waveform"></div>
         </section>
 
         <section id="lyrics-input">
@@ -42,6 +43,11 @@
             <h2>Export</h2>
             <button id="export-button" aria-label="Export LRC file" disabled>Give it to me</button>
         </section>
+
+        <section id="preview">
+            <h2>Preview</h2>
+            <div id="preview-area"></div>
+        </section>
     </main>
 
     <footer>
@@ -49,6 +55,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.6.3/wavesurfer.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
