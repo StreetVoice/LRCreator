@@ -3,8 +3,8 @@ let audioElement, lyricsTextarea, tagButton, exportButton, currentLineDiv, previ
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
-let isSeekingAudio = false;
-let isSeekingWave = false;
+let isSeeking = false;
+let isWavesurferReady = false;
 
 // Initialize the application
 function init() {
@@ -41,52 +41,48 @@ function initWavesurfer() {
         progressColor: 'purple',
         responsive: true,
         interact: true,
+        backend: 'MediaElement',
     });
 
     
     wavesurfer.on('ready', function () {
+        isWavesurferReady = true;
         syncPlayback();
-        syncProgress();
     });
 
     wavesurfer.on('seek', function(progress) {
-        if (!isSeekingAudio) {
-            isSeekingWave = true;
+        if (!isSeeking) {
+            isSeeking = true;
             audioElement.currentTime = progress * audioElement.duration;
-            isSeekingWave = false;
+            isSeeking = false;
         }
     });
 }
 
 function syncPlayback() {
     audioElement.addEventListener('play', () => {
-        if (!wavesurfer.isPlaying()) wavesurfer.play();
+        if (isWavesurferReady && !wavesurfer.isPlaying()) {
+            wavesurfer.play();
+        }
     });
-    audioElement.addEventListener('pause', () => {
-        if (wavesurfer.isPlaying()) wavesurfer.pause();
-    });
-    wavesurfer.on('play', () => {
-        if (audioElement.paused) audioElement.play();
-    });
-    wavesurfer.on('pause', () => {
-        if (!audioElement.paused) audioElement.pause();
-    });
-}
 
-function syncProgress() {
+    audioElement.addEventListener('pause', () => {
+        if (isWavesurferReady && wavesurfer.isPlaying()) {
+            wavesurfer.pause();
+        }
+    });
+
     audioElement.addEventListener('timeupdate', () => {
-        if (!isSeekingWave) {
-            isSeekingAudio = true;
+        if (isWavesurferReady && !isSeeking) {
             wavesurfer.seekTo(audioElement.currentTime / audioElement.duration);
-            isSeekingAudio = false;
         }
     });
 
     audioElement.addEventListener('seeking', () => {
-        if (!isSeekingWave) {
-            isSeekingAudio = true;
+        if (isWavesurferReady) {
+            isSeeking = true;
             wavesurfer.seekTo(audioElement.currentTime / audioElement.duration);
-            isSeekingAudio = false;
+            isSeeking = false;
         }
     });
 }
@@ -115,16 +111,22 @@ function handleFileSelect(event) {
     if (file) {
         const objectURL = URL.createObjectURL(file);
         audioElement.src = objectURL;
-        audioElement.load()
+        audioElement.load();
+        isWavesurferReady = false;
         wavesurfer.load(objectURL);
     }
 }
 
-// Handle lyrics input
 function handleLyricsInput() {
-    lyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+    const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+    
+    // If the number of lines has decreased, adjust currentLineIndex
+    if (newLyrics.length < lyrics.length && currentLineIndex >= newLyrics.length) {
+        currentLineIndex = Math.max(0, newLyrics.length - 1);
+    }
+    
+    lyrics = newLyrics;
     updateCurrentLine();
-    resetTagging();
     saveLyrics();
 }
 
