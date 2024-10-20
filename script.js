@@ -102,8 +102,22 @@ function handleExportButtonKeydown(event) {
 }
 
 function handleLyricsInput() {
-    lyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
-    currentLineIndex = 0; // Reset the current line index when lyrics are changed
+    const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+    
+    // Preserve existing tags if possible
+    lyrics = newLyrics.map((line, index) => {
+        if (index < lyrics.length && lyrics[index].match(/^\[\d{2}:\d{2}\.\d{2}\]/)) {
+            const tag = lyrics[index].match(/^\[\d{2}:\d{2}\.\d{2}\]/)[0];
+            return tag + line.replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
+        }
+        return line;
+    });
+
+    // Adjust currentLineIndex if necessary
+    if (currentLineIndex >= lyrics.length) {
+        currentLineIndex = Math.max(0, lyrics.length - 1);
+    }
+
     updateCurrentLine();
     saveLyrics();
 }
@@ -124,11 +138,7 @@ function tagCurrentLine() {
         const milliseconds = Math.floor((currentTime % 1) * 100);
         const timestamp = `[${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}]`;
         
-        if (!/^\[\d{2}:\d{2}\.\d{2}\]/.test(lyrics[currentLineIndex])) {
-            lyrics[currentLineIndex] = `${timestamp}${lyrics[currentLineIndex]}`;
-        } else {
-            lyrics[currentLineIndex] = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, timestamp);
-        }
+        lyrics[currentLineIndex] = timestamp + lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
         
         currentLineIndex++;
         updateLyricsTextarea();
@@ -143,14 +153,17 @@ function updateLyricsTextarea() {
 
 function updateCurrentLine() {
     if (currentLineIndex < lyrics.length) {
-        currentLineDiv.textContent = lyrics[currentLineIndex];
+        currentLineDiv.textContent = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
         tagButton.disabled = false;
-        exportButton.disabled = true;
     } else {
         currentLineDiv.textContent = 'All lines tagged';
         tagButton.disabled = true;
-        exportButton.disabled = false;
     }
+    
+    // Check if all lines are tagged
+    const allTagged = lyrics.every(line => /^\[\d{2}:\d{2}\.\d{2}\]/.test(line));
+    exportButton.disabled = !allTagged;
+
     tagButton.setAttribute('aria-label', tagButton.disabled ? 'All lines tagged' : `Tag line: ${currentLineDiv.textContent}`);
     exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
