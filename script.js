@@ -3,6 +3,7 @@ let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetB
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
+let audioFileName = '';
 
 // Initialize the application
 function init() {
@@ -23,6 +24,7 @@ function init() {
 
     tagButton.addEventListener('keydown', handleTagButtonKeydown);
     exportButton.addEventListener('keydown', handleExportButtonKeydown);
+    document.addEventListener('keydown', handleKeyPress);
 
     initWavesurfer();
     loadSavedData();
@@ -82,8 +84,21 @@ function handleFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
         console.log('File selected:', file.name);
+        audioFileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
         const objectURL = URL.createObjectURL(file);
         wavesurfer.load(objectURL);
+        playPauseButton.disabled = true;
+        playPauseButton.textContent = 'Loading...';
+    }
+}
+
+function handleKeyPress(event) {
+    // Check if the pressed key is 'T' or 't'
+    if (event.key === 'T' || event.key === 't') {
+        // Prevent the default action (e.g., typing 't' in an input field)
+        event.preventDefault();
+        // Call the tagCurrentLine function
+        tagCurrentLine();
     }
 }
 
@@ -174,7 +189,11 @@ function exportLRC() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'lyrics.txt';
+    
+    // Use the audio file name for the exported file, or a default name if no file was selected
+    const exportFileName = audioFileName ? `${audioFileName}.txt` : 'lyrics.txt';
+    a.download = exportFileName;
+    
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
