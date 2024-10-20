@@ -24,7 +24,6 @@ function init() {
 
     initWavesurfer();
     loadSavedData();
-    initI18n();
 }
 
 function initWavesurfer() {
@@ -133,7 +132,7 @@ function updateCurrentLine() {
         currentLineDiv.textContent = lyrics[currentLineIndex];
         tagButton.disabled = false;
     } else {
-        currentLineDiv.textContent = i18next.t('allLinesTagged');
+        currentLineDiv.textContent = 'All lines tagged';
         tagButton.disabled = true;
     }
     exportButton.disabled = currentLineIndex < lyrics.length;
@@ -183,61 +182,6 @@ function loadSavedData() {
     if (savedIndex) {
         currentLineIndex = parseInt(savedIndex, 10);
     }
-    
-    updateCurrentLine();
-}
-
-function initI18n() {
-    i18next
-        .init({
-            lng: 'en',
-            resources: {
-                en: { translation: {} },
-                'zh-TW': { translation: {} }
-            }
-        })
-        .then(function(t) {
-            updateContent();
-            document.getElementById('language-select').addEventListener('change', changeLanguage);
-        });
-    
-    loadLanguageFile('en');
-    loadLanguageFile('zh-TW');
-}
-
-function loadLanguageFile(lang) {
-    fetch(`i18n/${lang}.json`)
-        .then(response => response.json())
-        .then(data => {
-            i18next.addResourceBundle(lang, 'translation', data, true, true);
-            if (lang === i18next.language) {
-                updateContent();
-            }
-        });
-}
-
-function changeLanguage(event) {
-    i18next.changeLanguage(event.target.value).then(updateContent);
-}
-
-function updateContent() {
-    document.title = i18next.t('title');
-    document.querySelector('h1').textContent = i18next.t('title');
-    document.querySelector('#file-selection h2').textContent = i18next.t('selectAudio');
-    document.querySelector('#audio-player h2').textContent = i18next.t('audioPlayer');
-    document.querySelector('#lyrics-input h2').textContent = i18next.t('enterLyrics');
-    document.querySelector('#lrc-tagging h2').textContent = i18next.t('lrcTagging');
-    tagButton.textContent = i18next.t('thisIsIt');
-    document.querySelector('#export h2').textContent = i18next.t('export');
-    exportButton.textContent = i18next.t('giveItToMe');
-    document.querySelector('footer p').textContent = i18next.t('footer');
-    
-    document.getElementById('audio-file').setAttribute('aria-label', i18next.t('selectAudio'));
-    document.getElementById('playPause').setAttribute('aria-label', i18next.t('playPause'));
-    document.getElementById('volume').setAttribute('aria-label', i18next.t('volume'));
-    lyricsTextarea.setAttribute('aria-label', i18next.t('enterLyrics'));
-    tagButton.setAttribute('aria-label', i18next.t('thisIsIt'));
-    exportButton.setAttribute('aria-label', i18next.t('giveItToMe'));
     
     updateCurrentLine();
 }
