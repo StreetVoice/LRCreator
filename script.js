@@ -23,8 +23,27 @@ function init() {
     // Add error handling for file loading
     audioElement.addEventListener('error', handleAudioError);
 
+    initWavesurfer();
     loadSavedData();
     initI18n();
+}
+
+function initWavesurfer() {
+    wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: 'violet',
+        progressColor: 'purple',
+        responsive: true
+    });
+
+    wavesurfer.on('ready', function () {
+        audioElement.addEventListener('play', () => wavesurfer.play());
+        audioElement.addEventListener('pause', () => wavesurfer.pause());
+        audioElement.addEventListener('seeked', () => wavesurfer.seekTo(audioElement.currentTime / audioElement.duration));
+        wavesurfer.on('seek', (progress) => {
+            audioElement.currentTime = progress * audioElement.duration;
+        });
+    });
 }
 
 function handleTagButtonKeydown(event) {
@@ -51,6 +70,7 @@ function handleFileSelect(event) {
     if (file) {
         const objectURL = URL.createObjectURL(file);
         audioElement.src = objectURL;
+        wavesurfer.load(objectURL);
     }
 }
 
@@ -110,6 +130,18 @@ function exportLRC() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    updatePreview(lrcContent);
+}
+
+function updatePreview(lrcContent) {
+    previewArea.innerHTML = '';
+    const lines = lrcContent.split('\n');
+    lines.forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        previewArea.appendChild(p);
+    });
 }
 
 // Save lyrics to localStorage
