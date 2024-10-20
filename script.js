@@ -1,5 +1,5 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton;
+let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton, playPauseButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -12,12 +12,14 @@ function init() {
     currentLineDiv = document.getElementById('current-line');
     previewArea = document.getElementById('preview-area');
     resetButton = document.getElementById('reset-button');
+    playPauseButton = document.getElementById('playPause');
 
     document.getElementById('audio-file').addEventListener('change', handleFileSelect);
     lyricsTextarea.addEventListener('input', handleLyricsInput);
     tagButton.addEventListener('click', tagCurrentLine);
     exportButton.addEventListener('click', exportLRC);
     resetButton.addEventListener('click', resetTagging);
+    playPauseButton.addEventListener('click', togglePlayPause);
 
     tagButton.addEventListener('keydown', handleTagButtonKeydown);
     exportButton.addEventListener('keydown', handleExportButtonKeydown);
@@ -27,6 +29,7 @@ function init() {
 }
 
 function initWavesurfer() {
+    console.log('Initializing WaveSurfer');
     wavesurfer = WaveSurfer.create({
         container: '#waveform',
         waveColor: 'violet',
@@ -48,10 +51,8 @@ function initWavesurfer() {
     });
 
     wavesurfer.on('ready', function () {
-        document.getElementById('playPause').addEventListener('click', function() {
-            wavesurfer.playPause();
-        });
-
+        console.log('WaveSurfer is ready');
+        playPauseButton.disabled = false;
         document.getElementById('volume').addEventListener('input', function() {
             wavesurfer.setVolume(this.value);
         });
@@ -61,6 +62,20 @@ function initWavesurfer() {
         console.error('WaveSurfer error:', e);
         alert('Error loading audio file. Please try again with a different file.');
     });
+
+    wavesurfer.on('loading', function(percent) {
+        console.log('Loading audio:', percent + '%');
+    });
+}
+
+function togglePlayPause() {
+    if (wavesurfer.isPlaying()) {
+        wavesurfer.pause();
+        playPauseButton.textContent = 'Play';
+    } else {
+        wavesurfer.play();
+        playPauseButton.textContent = 'Pause';
+    }
 }
 
 function handleTagButtonKeydown(event) {
@@ -80,8 +95,11 @@ function handleExportButtonKeydown(event) {
 function handleFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
+        console.log('File selected:', file.name);
         const objectURL = URL.createObjectURL(file);
         wavesurfer.load(objectURL);
+        playPauseButton.disabled = true;
+        playPauseButton.textContent = 'Loading...';
     }
 }
 
