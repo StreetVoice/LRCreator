@@ -104,7 +104,7 @@ function handleFileSelect(event) {
 }
 
 function handleLyricsInput() {
-    const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+    const newLyrics = lyricsTextarea.innerText.split('\n').filter(line => line.trim() !== '');
     
     if (newLyrics.length < lyrics.length && currentLineIndex >= newLyrics.length) {
         currentLineIndex = Math.max(0, newLyrics.length - 1);
@@ -146,6 +146,21 @@ function updateLyricsTextarea() {
 }
 
 function updateCurrentLine() {
+    const lines = lyricsTextarea.value.split('\n');
+    lyricsTextarea.innerHTML = ''; // Clear the textarea
+
+    lines.forEach((line, index) => {
+        const lineElement = document.createElement('div');
+        lineElement.textContent = line;
+        lineElement.classList.add('lyrics-line');
+        
+        if (index === currentLineIndex) {
+            lineElement.classList.add('current-line');
+        }
+
+        lyricsTextarea.appendChild(lineElement);
+    });
+
     if (currentLineIndex < lyrics.length) {
         currentLineDiv.textContent = lyrics[currentLineIndex];
         tagButton.disabled = false;
