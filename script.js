@@ -104,18 +104,12 @@ function handleExportButtonKeydown(event) {
 function handleLyricsInput() {
     const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
     
-    // Preserve existing tags if possible
-    lyrics = newLyrics.map((line, index) => {
-        if (index < lyrics.length && lyrics[index].match(/^\[\d{2}:\d{2}\.\d{2}\]/)) {
-            const tag = lyrics[index].match(/^\[\d{2}:\d{2}\.\d{2}\]/)[0];
-            return tag + line.replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
-        }
-        return line;
-    });
-
-    // Adjust currentLineIndex if necessary
-    if (currentLineIndex >= lyrics.length) {
-        currentLineIndex = Math.max(0, lyrics.length - 1);
+    lyrics = newLyrics.map(line => line.trim());
+    
+    // Find the first untagged line
+    currentLineIndex = lyrics.findIndex(line => !line.match(/^\[\d{2}:\d{2}\.\d{2}\]/));
+    if (currentLineIndex === -1) {
+        currentLineIndex = lyrics.length; // All lines are tagged
     }
 
     updateCurrentLine();
@@ -123,8 +117,8 @@ function handleLyricsInput() {
 }
 
 function resetTagging() {
-    currentLineIndex = 0;
     lyrics = lyrics.map(line => line.replace(/^\[\d{2}:\d{2}\.\d{2}\]/, ''));
+    currentLineIndex = 0;
     updateLyricsTextarea();
     updateCurrentLine();
     saveLyrics();
@@ -140,7 +134,12 @@ function tagCurrentLine() {
         
         lyrics[currentLineIndex] = timestamp + lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
         
-        currentLineIndex++;
+        // Move to the next untagged line
+        currentLineIndex = lyrics.findIndex((line, index) => index > currentLineIndex && !line.match(/^\[\d{2}:\d{2}\.\d{2}\]/));
+        if (currentLineIndex === -1) {
+            currentLineIndex = lyrics.length; // All subsequent lines are tagged
+        }
+
         updateLyricsTextarea();
         updateCurrentLine();
         saveLyrics();
@@ -153,7 +152,8 @@ function updateLyricsTextarea() {
 
 function updateCurrentLine() {
     if (currentLineIndex < lyrics.length) {
-        currentLineDiv.textContent = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
+        const lineWithoutTag = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
+        currentLineDiv.textContent = `Current line: ${lineWithoutTag}`;
         tagButton.disabled = false;
     } else {
         currentLineDiv.textContent = 'All lines tagged';
