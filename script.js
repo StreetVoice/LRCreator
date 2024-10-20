@@ -70,6 +70,7 @@ function handleFileSelect(event) {
     if (file) {
         const objectURL = URL.createObjectURL(file);
         audioElement.src = objectURL;
+        audioElement.load()
         wavesurfer.load(objectURL);
     }
 }
