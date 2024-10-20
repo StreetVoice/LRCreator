@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LRC lyrics creator</title>
+    <title>LRC Lyrics creator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>LRC lyrics creator</h1>
-        <select id="language-select">
+        <label for="language-select">Select Language:</label>
+        <select id="language-select" aria-label="Select language">
             <option value="en">English</option>
             <option value="zh-TW">繁體中文</option>
         </select>
@@ -18,33 +19,33 @@
     <main>
         <section id="file-selection">
             <h2>Select Audio File</h2>
-            <input type="file" id="audio-file" accept="audio/*">
+            <input type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
         </section>
 
         <section id="audio-player">
             <h2>Audio Player</h2>
-            <audio id="audio-element" controls></audio>
+            <audio id="audio-element" controls aria-label="Audio player"></audio>
         </section>
 
         <section id="lyrics-input">
             <h2>Enter Lyrics</h2>
-            <textarea id="lyrics-textarea" rows="10" cols="50"></textarea>
+            <textarea id="lyrics-textarea" rows="10" cols="50" aria-label="Enter lyrics here"></textarea>
         </section>
 
         <section id="lrc-tagging">
             <h2>LRC Tagging</h2>
-            <button id="tag-button">This is it</button>
-            <div id="current-line"></div>
+            <button id="tag-button" aria-label="Tag current line">This is it</button>
+            <div id="current-line" aria-live="polite" aria-atomic="true"></div>
         </section>
 
         <section id="export">
             <h2>Export</h2>
-            <button id="export-button" disabled>Give it to me</button>
+            <button id="export-button" aria-label="Export LRC file" disabled>Give it to me</button>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 StreetVoice</p>
+        <p>&copy; StreetVoice</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
