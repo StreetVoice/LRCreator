@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LRC Lyrics creator</title>
+    <title>LRC Lyrics Creator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>LRC lyrics creator</h1>
-        <label for="language-select">Select Language:</label>
-        <select id="language-select" aria-label="Select language">
-            <option value="en">English</option>
-            <option value="zh-TW">繁體中文</option>
-        </select>
+        <h1>LRC Lyrics Creator</h1>
     </header>
 
     <main>
@@ -21,12 +16,13 @@
             <h2>Select Audio File</h2>
             <input type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
         </section>
+
         <section id="audio-player">
             <h2>Audio Player</h2>
             <div id="waveform"></div>
             <div id="waveform-controls">
                 <button id="playPause">Play/Pause</button>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1" aria-label="Volume">
             </div>
         </section>
 
@@ -57,7 +53,6 @@
         <p>&copy; StreetVoice</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.6.3/wavesurfer.min.js"></script>
     <script src="script.js"></script>
 </body>
