@@ -74,8 +74,17 @@ button:disabled {
 }
 
 /* Audio player styles */
-audio {
+audio-element {
+    width: 100%;    
+    margin-bottom: 10px;
+}
+
+#waveform {
     width: 100%;
+    height: 128px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 /* Footer styles */
