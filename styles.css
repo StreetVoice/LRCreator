@@ -98,7 +98,8 @@ h2 {
     justify-content: space-between;
 }
 
-#reset-button {
+#reset-button,
+#back-button {
     font-size: 0.8em;
     padding: 2px 5px;
     margin-left: 10px;

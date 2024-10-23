@@ -13,6 +13,7 @@ function init() {
     exportButton = document.getElementById('export-button');
     currentLineDiv = document.getElementById('current-line');
     previewArea = document.getElementById('preview-area');
+    backButton = document.getElementById('back-button');
     resetButton = document.getElementById('reset-button');
     playPauseButton = document.getElementById('playPause');
 
@@ -20,6 +21,7 @@ function init() {
     lyricsTextarea.addEventListener('input', handleLyricsInput);
     tagButton.addEventListener('click', tagCurrentLine);
     exportButton.addEventListener('click', exportLRC);
+    backButton.addEventListener('click', backTagging);
     resetButton.addEventListener('click', resetTagging);
     playPauseButton.addEventListener('click', togglePlayPause);
 
@@ -130,6 +132,35 @@ function handleLyricsInput() {
 
     updateCurrentLine();
     saveLyrics();
+}
+
+function getTaggedTimeInSecondsByLineIndex(lineIndex) {
+  return new Promise((resolve, reject) => {
+    const tag = lyrics[lineIndex].match(TAG_REGEX, '');
+
+    if (tag) {
+      const minutes = parseInt(tag[1], 10);
+      const seconds = parseInt(tag[2], 10);
+      const milliseconds = parseInt(tag[3], 10);
+      const time = minutes * 60 + seconds - 2;
+
+      resolve({ tag, time });
+    } else {
+      reject();
+    }
+  });
+}
+
+function backTagging() {
+  if (currentLineIndex > 0) {
+    getTaggedTimeInSecondsByLineIndex(currentLineIndex - 1).then(({ tag, time }) => {
+      currentLineIndex -= 1;
+      wavesurfer.setCurrentTime(time);
+      lyrics[currentLineIndex] = lyrics[currentLineIndex].replace(tag[0], '');
+      updateLyricsTextarea();
+      updateCurrentLine();
+    });
+  }
 }
 
 function resetTagging() {
