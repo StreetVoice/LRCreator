@@ -4,6 +4,7 @@ let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
 let audioFileName = '';
+const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
 
 // Initialize the application
 function init() {
@@ -118,11 +119,11 @@ function handleExportButtonKeydown(event) {
 
 function handleLyricsInput() {
     const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
-    
+
     lyrics = newLyrics.map(line => line.trim());
-    
+
     // Find the first untagged line
-    currentLineIndex = lyrics.findIndex(line => !line.match(/^\[\d{2}:\d{2}\.\d{2}\]/));
+    currentLineIndex = lyrics.findIndex(line => !line.match(TAG_REGEX));
     if (currentLineIndex === -1) {
         currentLineIndex = lyrics.length; // All lines are tagged
     }
@@ -132,7 +133,7 @@ function handleLyricsInput() {
 }
 
 function resetTagging() {
-    lyrics = lyrics.map(line => line.replace(/^\[\d{2}:\d{2}\.\d{2}\]/, ''));
+    lyrics = lyrics.map(line => line.replace(TAG_REGEX, ''));
     currentLineIndex = 0;
     updateLyricsTextarea();
     updateCurrentLine();
@@ -146,11 +147,11 @@ function tagCurrentLine() {
         const seconds = Math.floor(currentTime % 60);
         const milliseconds = Math.floor((currentTime % 1) * 100);
         const timestamp = `[${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}]`;
-        
-        lyrics[currentLineIndex] = timestamp + lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
-        
+
+        lyrics[currentLineIndex] = timestamp + lyrics[currentLineIndex].replace(TAG_REGEX, '');
+
         // Move to the next untagged line
-        currentLineIndex = lyrics.findIndex((line, index) => index > currentLineIndex && !line.match(/^\[\d{2}:\d{2}\.\d{2}\]/));
+        currentLineIndex = lyrics.findIndex((line, index) => index > currentLineIndex && !line.match(TAG_REGEX));
         if (currentLineIndex === -1) {
             currentLineIndex = lyrics.length; // All subsequent lines are tagged
         }
@@ -167,16 +168,16 @@ function updateLyricsTextarea() {
 
 function updateCurrentLine() {
     if (currentLineIndex < lyrics.length) {
-        const lineWithoutTag = lyrics[currentLineIndex].replace(/^\[\d{2}:\d{2}\.\d{2}\]/, '');
+        const lineWithoutTag = lyrics[currentLineIndex].replace(TAG_REGEX, '');
         currentLineDiv.textContent = `Current line: ${lineWithoutTag}`;
         tagButton.disabled = false;
     } else {
         currentLineDiv.textContent = 'All lines tagged';
         tagButton.disabled = true;
     }
-    
+
     // Check if all lines are tagged
-    const allTagged = lyrics.every(line => /^\[\d{2}:\d{2}\.\d{2}\]/.test(line));
+    const allTagged = lyrics.every(line => TAG_REGEX.test(line));
     exportButton.disabled = !allTagged;
 
     tagButton.setAttribute('aria-label', tagButton.disabled ? 'All lines tagged' : `Tag line: ${currentLineDiv.textContent}`);
@@ -189,11 +190,11 @@ function exportLRC() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    
+
     // Use the audio file name for the exported file, or a default name if no file was selected
     const exportFileName = audioFileName ? `${audioFileName}.txt` : 'lyrics.txt';
     a.download = exportFileName;
-    
+
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -220,16 +221,16 @@ function saveLyrics() {
 function loadSavedData() {
     const savedLyrics = localStorage.getItem('lrcCreatorLyrics');
     const savedIndex = localStorage.getItem('lrcCreatorCurrentIndex');
-    
+
     if (savedLyrics) {
         lyrics = JSON.parse(savedLyrics);
         lyricsTextarea.value = lyrics.join('\n');
     }
-    
+
     if (savedIndex) {
         currentLineIndex = parseInt(savedIndex, 10);
     }
-    
+
     updateCurrentLine();
 }
 
