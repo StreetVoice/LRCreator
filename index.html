@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LRC Lyrics Creator</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.min.js"></script>
-    <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/plugin/wavesurfer.cursor.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LRC Lyrics Creator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/plugin/wavesurfer.cursor.min.js"></script>
 </head>
+
 <body>
-    <header>
-        <h1>LRC Lyrics Creator</h1>
-    </header>
+  <header>
+    <h1>LRC Lyrics Creator</h1>
+  </header>
 
-    <main>
-        <section id="file-selection">
-            <h2>Select Audio File</h2>
-            <input type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
-        </section>
+  <main>
+    <section id="file-selection">
+      <h2>Select Audio File</h2>
+      <input type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
+    </section>
 
-        <section id="audio-player">
-            <h2>Audio Player</h2>
-            <div id="waveform"></div>
-            <div id="waveform-controls">
-                <button id="playPause" disabled>Play</button>
-            </div>
-        </section>
+    <section id="audio-player">
+      <h2>Audio Player</h2>
+      <div id="waveform"></div>
+      <div id="waveform-controls">
+        <button id="playPause" disabled>Play</button>
+      </div>
+    </section>
 
-        <section id="lyrics-input">
-            <h2>Enter Lyrics</h2>
-            <textarea id="lyrics-textarea" rows="10" cols="50" aria-label="Enter lyrics here"></textarea>
-        </section>
+    <section id="lyrics-input">
+      <h2>Enter Lyrics</h2>
+      <textarea id="lyrics-textarea" rows="10" cols="50" aria-label="Enter lyrics here"></textarea>
+    </section>
 
-        <section id="lrc-tagging">
-            <h2>LRC Tagging
-                <div>
-                    <button id="back-button" aria-label="Back">Back</button>
-                    <button id="reset-button" aria-label="Reset tagging">Reset</button>
-                    <button id="copy-button" aria-label="Copy lyrics">Copy</button>
-                </div>
-            </h2>
-            <button id="tag-button" aria-label="Tag current line">This is it</button>
-            <div id="current-line" aria-live="polite" aria-atomic="true"></div>
-            <p id="shortcut-hint">Keyboard shortcut: Press 'T' to tag the current line</p>
-        </section>
+    <section id="lrc-tagging">
+      <h2>LRC Tagging
+        <div>
+          <button id="back-button" aria-label="Back">Back</button>
+          <button id="reset-button" aria-label="Reset tagging">Reset</button>
+          <button id="copy-button" aria-label="Copy lyrics">Copy</button>
+        </div>
+      </h2>
+      <button id="tag-button" aria-label="Tag current line">This is it</button>
+      <div id="current-line" aria-live="polite" aria-atomic="true"></div>
+      <p id="shortcut-hint">Keyboard shortcut: Press 'T' to tag the current line</p>
+    </section>
 
-        <section id="export">
-            <h2>Export</h2>
-            <button id="export-button" aria-label="Export LRC file" disabled>Give it to me</button>
-        </section>
+    <section id="export">
+      <h2>Export</h2>
+      <button id="export-button" aria-label="Export LRC file" disabled>Give it to me</button>
+    </section>
 
-        <section id="preview">
-            <h2>Preview</h2>
-            <div id="preview-area"></div>
-        </section>
-    </main>
+    <section id="preview">
+      <h2>Preview</h2>
+      <div id="preview-area"></div>
+    </section>
+  </main>
 
-    <footer>
-        <p>&copy; StreetVoice</p>
-    </footer>
+  <footer>
+    <p>&copy; StreetVoice</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
