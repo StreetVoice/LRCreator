@@ -1,5 +1,5 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton, playPauseButton;
+let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton, playPauseButton, copyButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -16,6 +16,7 @@ function init() {
     backButton = document.getElementById('back-button');
     resetButton = document.getElementById('reset-button');
     playPauseButton = document.getElementById('playPause');
+    copyButton = document.getElementById('copy-button');
 
     document.getElementById('audio-file').addEventListener('change', handleFileSelect);
     lyricsTextarea.addEventListener('input', handleLyricsInput);
@@ -24,6 +25,7 @@ function init() {
     backButton.addEventListener('click', backTagging);
     resetButton.addEventListener('click', resetTagging);
     playPauseButton.addEventListener('click', togglePlayPause);
+    copyButton.addEventListener('click', copyLyrics);
 
     tagButton.addEventListener('keydown', handleTagButtonKeydown);
     exportButton.addEventListener('keydown', handleExportButtonKeydown);
@@ -263,6 +265,22 @@ function loadSavedData() {
     }
 
     updateCurrentLine();
+}
+
+function copyLyrics() {
+  const { value } = document.getElementById('lyrics-textarea');
+  const tempInput = document.createElement('input');
+
+  tempInput.style = 'position: absolute; left: -1000px; top: -1000px';
+  tempInput.value = value;
+
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand('copy');
+  window.getSelection().removeAllRanges();
+  document.body.removeChild(tempInput);
+
+  // TODO: 已複製樣式
 }
 
 document.addEventListener('DOMContentLoaded', init);
