@@ -169,7 +169,7 @@ function getTaggedTimeInSecondsByLineIndex(lineIndex) {
       const minutes = parseInt(tag[1], 10);
       const seconds = parseInt(tag[2], 10);
       const milliseconds = parseInt(tag[3], 10);
-      const time = minutes * 60 + seconds - 2;
+      const time = minutes * 60 + seconds - (milliseconds > 0 ? 1 : 0);
 
       resolve({ tag, time });
     } else {
