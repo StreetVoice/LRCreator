@@ -20,6 +20,7 @@ function init() {
 
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
   lyricsTextarea.addEventListener('input', handleLyricsInput);
+  lyricsTextarea.addEventListener('click', handleClickLyrics);
   tagButton.addEventListener('click', tagCurrentLine);
   exportButton.addEventListener('click', exportLRC);
   backButton.addEventListener('click', backTagging);
@@ -134,6 +135,30 @@ function handleLyricsInput() {
 
   updateCurrentLine();
   saveLyrics();
+}
+
+function handleClickLyrics() {
+  const cursorPosition = lyricsTextarea.selectionStart;
+  const text = lyricsTextarea.value;
+  const lines = text.split('\n');
+  let charCount = 0;
+  let clickedLineIndex = 0;
+
+  for (const [index, line] of lines.entries()) {
+    if (cursorPosition <= charCount + line.length) {
+      clickedLineIndex = index;
+      break;
+    }
+    charCount += line.length + 1; // +1 是為了跳過換行符號
+  }
+
+  setPlayerTime(clickedLineIndex);
+}
+
+function setPlayerTime(clickedLineIndex) {
+  getTaggedTimeInSecondsByLineIndex(clickedLineIndex).then(({ tag, time }) => {
+    wavesurfer.setCurrentTime(time);
+  });
 }
 
 function getTaggedTimeInSecondsByLineIndex(lineIndex) {
