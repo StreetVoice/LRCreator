@@ -244,6 +244,9 @@ h2 {
   background: #f9595f;
   color: #fff;
   top: -90px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 .tooltip:before {
   content: "";
@@ -258,6 +261,10 @@ h2 {
   background-color: #f9595f;
   transform: rotate(-60deg) skewX(-30deg) scale(1, .866);
   z-index: 2;
+}
+.tooltip.show {
+  opacity: 1;
+  visibility: visible;
 }
 /* Lyrics Input */
 #lyrics-textarea {
