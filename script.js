@@ -40,8 +40,8 @@ function initWavesurfer() {
   console.log('Initializing WaveSurfer');
   wavesurfer = WaveSurfer.create({
     container: '#waveform',
-    waveColor: 'violet',
-    progressColor: 'purple',
+    waveColor: '#d2d2d2',
+    progressColor: '#f9595f',
     responsive: true,
     interact: true,
     plugins: [

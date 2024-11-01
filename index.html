@@ -4,63 +4,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LRC Lyrics Creator</title>
+  <title>StreetVoice 街聲 - 動態歌詞小工具</title>
+  <link rel="shortcut icon" href="images/ico/favicon.ico" />
   <link rel="stylesheet" href="styles.css">
   <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.min.js"></script>
   <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/plugin/wavesurfer.cursor.min.js"></script>
 </head>
 
 <body>
-  <header>
-    <h1>LRC Lyrics Creator</h1>
+  <header class="text-center">
+    <img src="images/logo-sv-r.svg" />
+    <h1>動態歌詞小工具</h1>
   </header>
 
   <main>
-    <section id="file-selection">
-      <h2>Select Audio File</h2>
-      <input type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
-    </section>
-
-    <section id="audio-player">
-      <h2>Audio Player</h2>
-      <div id="waveform"></div>
-      <div id="waveform-controls">
-        <button id="playPause" disabled>Play</button>
+    <section id="file-selection" class="d-block">
+      <div class="dashed-block text-center">
+        <span class="icon-plus text-red font-size-xl"></span>
+        <h2>上傳歌曲</h2>
+        <p class="text-muted"><small>請放心！我們不會取得你的音檔，你的歌曲也不會經此上傳到任何地方或作為其他用途。</small></p>
       </div>
+      <input class="d-none" type="file" id="audio-file" accept="audio/*" aria-label="Select audio file">
     </section>
 
-    <section id="lyrics-input">
-      <h2>Enter Lyrics</h2>
-      <textarea id="lyrics-textarea" rows="10" cols="50" aria-label="Enter lyrics here"></textarea>
-    </section>
-
-    <section id="lrc-tagging">
-      <h2>LRC Tagging
-        <div>
-          <button id="back-button" aria-label="Back">Back</button>
-          <button id="reset-button" aria-label="Reset tagging">Reset</button>
-          <button id="copy-button" aria-label="Copy lyrics">Copy</button>
-        </div>
-      </h2>
-      <button id="tag-button" aria-label="Tag current line">This is it</button>
-      <div id="current-line" aria-live="polite" aria-atomic="true"></div>
-      <p id="shortcut-hint">Keyboard shortcut: Press 'T' to tag the current line</p>
-    </section>
-
-    <section id="export">
-      <h2>Export</h2>
-      <button id="export-button" aria-label="Export LRC file" disabled>Give it to me</button>
-    </section>
-
-    <section id="preview">
-      <h2>Preview</h2>
-      <div id="preview-area"></div>
+    <section id="lyrics-input" class="d-block">
+      <div class="position-relative">
+        <span class="icon-arrow text-red position-absolute"></span>
+        <textarea id="lyrics-textarea" rows="6" cols="50" aria-label="Enter lyrics here" placeholder="請輸入歌詞"></textarea>
+      </div>
+      <div class="text-right">
+        <button id="back-button" class="btn-white" aria-label="Back">上一步</button>
+        <button id="reset-button" class="btn-white" aria-label="Reset tagging">重來</button>
+        <button id="copy-button" class="btn-white" aria-label="Copy lyrics">複製</button>
+        <button id="export-button" class="btn-red" aria-label="Export LRC file" disabled>匯出</button>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; StreetVoice</p>
+    <p><small>&copy; StreetVoice 街聲.</small></p>
   </footer>
+
+  <section id="audio-player" class="show">
+    <div id="waveform"></div>
+    <div id="waveform-controls" class="position-relative">
+      <div class="tooltip position-absolute show">
+        點擊播放按鈕後，再在要標記的時間點擊標記按鈕就可以囉！
+      </div>
+      <button id="playPause" class="btn-circle btn-white" disabled>
+        <span class="icon-play"></span>
+        <span class="icon-pause d-none"></span>
+        <span class="icon-loading d-none"></span>
+      </button>
+      <button id="tag-button" class="btn-circle btn-red" aria-label="Tag current line">
+        <span class="icon-time"></span>
+      </button>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
