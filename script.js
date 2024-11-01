@@ -294,7 +294,7 @@ function loadSavedData() {
 
 function copyLyrics() {
   const { value } = document.getElementById('lyrics-textarea');
-  const tempInput = document.createElement('input');
+  const tempInput = document.createElement('textarea');
 
   tempInput.style = 'position: absolute; left: -1000px; top: -1000px';
   tempInput.value = value;
