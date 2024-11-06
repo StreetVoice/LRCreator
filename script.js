@@ -36,11 +36,12 @@ function init() {
 }
 
 function initWavesurfer() {
-  console.log('Initializing WaveSurfer');
   wavesurfer = WaveSurfer.create({
     container: '#waveform',
-    waveColor: '#d2d2d2',
+    waveColor: '#e4e4e4',
     progressColor: '#f9595f',
+    barWidth: 3,
+    barRadius: 4,
     responsive: true,
     interact: true,
     plugins: [
@@ -48,10 +49,10 @@ function initWavesurfer() {
         showTime: true,
         opacity: 1,
         customShowTimeStyle: {
-          'background-color': '#000',
+          backgroundColor: '#444',
           color: '#fff',
           padding: '2px',
-          'font-size': '10px'
+          fontSize: '10px',
         }
       })
     ]
