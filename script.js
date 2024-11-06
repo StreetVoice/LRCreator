@@ -4,6 +4,7 @@ let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
 let audioFileName = '';
+let playState = 0; // 0: stop || 1: loading || 2: pause || 3: play
 const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
 
 // Initialize the application
@@ -17,8 +18,9 @@ function init() {
   resetButton = document.getElementById('reset-button');
   playPauseButton = document.getElementById('playPause');
   copyButton = document.getElementById('copy-button');
+  uploadFileSection = document.getElementById('file-section');
+  lyricsSection = document.getElementById('lyrics-section');
 
-  document.getElementById('audio-file').addEventListener('change', handleFileSelect);
   lyricsTextarea.addEventListener('input', handleLyricsInput);
   lyricsTextarea.addEventListener('click', handleClickLyrics);
   tagButton.addEventListener('click', tagCurrentLine);
@@ -27,6 +29,9 @@ function init() {
   resetButton.addEventListener('click', resetTagging);
   playPauseButton.addEventListener('click', togglePlayPause);
   copyButton.addEventListener('click', copyLyrics);
+
+  uploadFileSection.addEventListener('click', uploadFile);
+  document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
   tagButton.addEventListener('keydown', handleTagButtonKeydown);
   exportButton.addEventListener('keydown', handleExportButtonKeydown);
@@ -59,9 +64,8 @@ function initWavesurfer() {
   });
 
   wavesurfer.on('ready', function () {
-    console.log('WaveSurfer is ready');
+    setPlayState(2);
     playPauseButton.disabled = false;
-    playPauseButton.textContent = 'Play';
   });
 
   wavesurfer.on('error', function (e) {
@@ -70,31 +74,17 @@ function initWavesurfer() {
   });
 
   wavesurfer.on('loading', function (percent) {
-    console.log('Loading audio:', percent + '%');
-    playPauseButton.textContent = 'Loading...';
-    playPauseButton.disabled = true;
+    setPlayState(1);
   });
 }
 
 function togglePlayPause() {
   if (wavesurfer.isPlaying()) {
     wavesurfer.pause();
-    playPauseButton.textContent = 'Play';
+    setPlayState(2);
   } else {
     wavesurfer.play();
-    playPauseButton.textContent = 'Pause';
-  }
-}
-
-function handleFileSelect(event) {
-  const file = event.target.files[0];
-  if (file) {
-    console.log('File selected:', file.name);
-    audioFileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-    const objectURL = URL.createObjectURL(file);
-    wavesurfer.load(objectURL);
-    playPauseButton.disabled = true;
-    playPauseButton.textContent = 'Loading...';
+    setPlayState(3);
   }
 }
 
@@ -282,6 +272,49 @@ function copyLyrics() {
   document.body.removeChild(tempInput);
 
   // TODO: 已複製樣式
+}
+
+function uploadFile() {
+  document.getElementById('audio-file').click();
+}
+
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (file) {
+    uploadFileSection.remove();
+    lyricsSection.classList.remove('d-none');
+    lyricsSection.classList.add('d-block');
+
+    audioFileName = file.name.replace(/\.[^/.]+$/, ''); // Remove file extension
+    const objectURL = URL.createObjectURL(file);
+    wavesurfer.load(objectURL);
+  }
+}
+
+function setPlayState(state) {
+  playState = state;
+
+  switch (playState) {
+  case 0:
+  case 2:
+    document.querySelector('.icon-play').classList.remove('d-none');
+    document.querySelector('.icon-pause').classList.add('d-none');
+    document.querySelector('.icon-loading').classList.add('d-none');
+    break;
+  case 1:
+    document.querySelector('.icon-play').classList.add('d-none');
+    document.querySelector('.icon-pause').classList.add('d-none');
+    document.querySelector('.icon-loading').classList.remove('d-none');
+    break;
+  case 3:
+    document.querySelector('.icon-play').classList.add('d-none');
+    document.querySelector('.icon-pause').classList.remove('d-none');
+    document.querySelector('.icon-loading').classList.add('d-none');
+    break;
+  default:
+    break;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
