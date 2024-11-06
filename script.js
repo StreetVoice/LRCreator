@@ -33,7 +33,6 @@ function init() {
   document.addEventListener('keydown', handleKeyPress);
 
   initWavesurfer();
-  loadSavedData();
 }
 
 function initWavesurfer() {
@@ -134,7 +133,6 @@ function handleLyricsInput() {
   }
 
   updateCurrentLine();
-  saveLyrics();
 }
 
 function handleClickLyrics() {
@@ -195,7 +193,6 @@ function resetTagging() {
   currentLineIndex = 0;
   updateLyricsTextarea();
   updateCurrentLine();
-  saveLyrics();
 }
 
 function tagCurrentLine() {
@@ -216,7 +213,6 @@ function tagCurrentLine() {
 
     updateLyricsTextarea();
     updateCurrentLine();
-    saveLyrics();
   }
 }
 
@@ -269,27 +265,6 @@ function updatePreview(lrcContent) {
     p.textContent = line;
     previewArea.appendChild(p);
   });
-}
-
-function saveLyrics() {
-  localStorage.setItem('lrcCreatorLyrics', JSON.stringify(lyrics));
-  localStorage.setItem('lrcCreatorCurrentIndex', currentLineIndex.toString());
-}
-
-function loadSavedData() {
-  const savedLyrics = localStorage.getItem('lrcCreatorLyrics');
-  const savedIndex = localStorage.getItem('lrcCreatorCurrentIndex');
-
-  if (savedLyrics) {
-    lyrics = JSON.parse(savedLyrics);
-    lyricsTextarea.value = lyrics.join('\n');
-  }
-
-  if (savedIndex) {
-    currentLineIndex = parseInt(savedIndex, 10);
-  }
-
-  updateCurrentLine();
 }
 
 function copyLyrics() {
