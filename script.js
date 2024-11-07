@@ -84,6 +84,7 @@ function togglePlayPause() {
     wavesurfer.pause();
     setPlayState(2);
   } else {
+    setTextareaScrollTop();
     wavesurfer.play();
     setPlayState(3);
   }
@@ -188,6 +189,7 @@ function backTagging() {
       lyrics[currentLineIndex] = lyrics[currentLineIndex].replace(tag[0], '');
       updateLyricsTextarea();
       updateCurrentLine();
+      setTextareaScrollTop();
     });
   }
 }
@@ -197,6 +199,7 @@ function resetTagging() {
   currentLineIndex = 0;
   updateLyricsTextarea();
   updateCurrentLine();
+  setTextareaScrollTop();
 }
 
 function tagCurrentLine() {
@@ -217,7 +220,12 @@ function tagCurrentLine() {
 
     updateLyricsTextarea();
     updateCurrentLine();
+    setTextareaScrollTop();
   }
+}
+
+function setTextareaScrollTop() {
+  lyricsTextarea.scrollTop = currentLineIndex * 16 * 1.8;
 }
 
 function updateLyricsTextarea() {
