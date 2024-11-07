@@ -192,12 +192,18 @@ h2 {
   margin-bottom: 3rem;
 }
 .dashed-block {
-  display: block;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
   border: 2px dashed #d2d2d2;
   padding: 3rem 1rem;
   border-radius: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
+  min-height: calc(100vh - 280px);
+}
+.dashed-block > div {
+  width: 100%;
 }
 .dashed-block h2 {
   margin-top: 1rem;
@@ -269,7 +275,7 @@ h2 {
 /* Lyrics Input */
 #lyrics-textarea {
   width: 100%;
-  min-height: 200px;
+  min-height: calc(100vh - 330px);
   padding: 1rem;
   font-family: monospace;
   font-size: 1rem;
@@ -295,7 +301,7 @@ footer {
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 992px) {
   body {
     padding-bottom: 60px;
   }
@@ -331,7 +337,8 @@ footer {
 
   #lyrics-textarea {
     padding: 0.5rem;
-    font-size: 0.9rem;  
+    font-size: 0.9rem;
+    min-height: 0;
   }
   .icon-arrow {
     font-size: 1.3rem;
@@ -348,5 +355,8 @@ footer {
 
   h1 {
     font-size: 1.35rem;
+  }
+  .dashed-block {
+    min-height: 0;
   }
 }
