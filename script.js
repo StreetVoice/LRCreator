@@ -197,6 +197,7 @@ function backTagging() {
 function resetTagging() {
   lyrics = lyrics.map(line => line.replace(TAG_REGEX, ''));
   currentLineIndex = 0;
+  wavesurfer.setCurrentTime(0);
   updateLyricsTextarea();
   updateCurrentLine();
   setTextareaScrollTop();
