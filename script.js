@@ -1,5 +1,5 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, currentLineDiv, previewArea, resetButton, playPauseButton, copyButton;
+let lyricsTextarea, tagButton, exportButton, previewArea, resetButton, playPauseButton, copyButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -12,7 +12,6 @@ function init() {
   lyricsTextarea = document.getElementById('lyrics-textarea');
   tagButton = document.getElementById('tag-button');
   exportButton = document.getElementById('export-button');
-  currentLineDiv = document.getElementById('current-line');
   previewArea = document.getElementById('preview-area');
   backButton = document.getElementById('back-button');
   resetButton = document.getElementById('reset-button');
@@ -21,8 +20,10 @@ function init() {
   uploadFileSection = document.getElementById('file-section');
   lyricsSection = document.getElementById('lyrics-section');
 
+  lyricsTextarea.addEventListener('paste', handlePastekLyrics);
   lyricsTextarea.addEventListener('input', handleLyricsInput);
   lyricsTextarea.addEventListener('click', handleClickLyrics);
+
   tagButton.addEventListener('click', tagCurrentLine);
   exportButton.addEventListener('click', exportLRC);
   backButton.addEventListener('click', backTagging);
@@ -126,7 +127,19 @@ function handleLyricsInput() {
   updateCurrentLine();
 }
 
+function handlePastekLyrics() {
+  if (!localStorage.getItem('show-sv-lrc-creator-tooltip')) {
+    document.querySelector('.tooltip').classList.add('show');
+    localStorage.setItem('show-sv-lrc-creator-tooltip', true);
+    document.body.addEventListener('click', () => {
+      document.querySelector('.tooltip').remove();
+    }, { once : true });
+  }
+}
+
 function handleClickLyrics() {
+  if (lyrics.length === 0) return;
+
   const cursorPosition = lyricsTextarea.selectionStart;
   const text = lyricsTextarea.value;
   const lines = text.split('\n');
@@ -214,10 +227,8 @@ function updateLyricsTextarea() {
 function updateCurrentLine() {
   if (currentLineIndex < lyrics.length) {
     const lineWithoutTag = lyrics[currentLineIndex].replace(TAG_REGEX, '');
-    currentLineDiv.textContent = `Current line: ${lineWithoutTag}`;
     tagButton.disabled = false;
   } else {
-    currentLineDiv.textContent = 'All lines tagged';
     tagButton.disabled = true;
   }
 
@@ -225,7 +236,6 @@ function updateCurrentLine() {
   const allTagged = lyrics.every(line => TAG_REGEX.test(line));
   exportButton.disabled = !allTagged;
 
-  tagButton.setAttribute('aria-label', tagButton.disabled ? 'All lines tagged' : `Tag line: ${currentLineDiv.textContent}`);
   exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
 
