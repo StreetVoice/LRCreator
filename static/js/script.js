@@ -1,5 +1,5 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, previewArea, resetButton, playPauseButton, copyButton;
+let lyricsTextarea, tagButton, exportButton, resetButton, playPauseButton, copyButton;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -12,7 +12,6 @@ function init() {
   lyricsTextarea = document.getElementById('lyrics-textarea');
   tagButton = document.getElementById('tag-button');
   exportButton = document.getElementById('export-button');
-  previewArea = document.getElementById('preview-area');
   backButton = document.getElementById('back-button');
   resetButton = document.getElementById('reset-button');
   playPauseButton = document.getElementById('playPause');
@@ -33,9 +32,6 @@ function init() {
 
   uploadFileSection.addEventListener('click', uploadFile);
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
-
-  tagButton.addEventListener('keydown', handleTagButtonKeydown);
-  document.addEventListener('keydown', handleKeyPress);
 
   initWavesurfer();
 }
@@ -86,23 +82,6 @@ function togglePlayPause() {
     setTextareaScrollTop();
     wavesurfer.play();
     setPlayState(3);
-  }
-}
-
-function handleKeyPress(event) {
-  // Check if the pressed key is 'T' or 't'
-  if (event.key === 'T' || event.key === 't') {
-    // Prevent the default action (e.g., typing 't' in an input field)
-    event.preventDefault();
-    // Call the tagCurrentLine function
-    tagCurrentLine();
-  }
-}
-
-function handleTagButtonKeydown(event) {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    tagCurrentLine();
   }
 }
 
@@ -249,18 +228,6 @@ function exportLRC() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-
-  updatePreview(lrcContent);
-}
-
-function updatePreview(lrcContent) {
-  previewArea.innerHTML = '';
-  const lines = lrcContent.split('\n');
-  lines.forEach(line => {
-    const p = document.createElement('p');
-    p.textContent = line;
-    previewArea.appendChild(p);
-  });
 }
 
 function copyLyrics() {
