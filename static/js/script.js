@@ -31,6 +31,8 @@ function init() {
   copyButton.addEventListener('click', copyLyrics);
 
   uploadFileSection.addEventListener('click', uploadFile);
+  uploadFileSection.addEventListener('drop', handleDrop);
+  uploadFileSection.addEventListener('dragover', handleDragOver);
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
   initWavesurfer();
@@ -250,6 +252,30 @@ function uploadFile() {
   document.getElementById('audio-file').click();
 }
 
+function handleDrop(e) {
+  e.preventDefault();
+
+  const file = e.dataTransfer.items[0].getAsFile();
+
+  if (file.type === 'audio/mpeg') {
+    handleFileSelect({
+      target: {
+        files: [file],
+      },
+    });
+  } else {
+    showAlert('上傳格式限 MP3');
+  }
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+}
+
+function showAlert(message) {
+  document.querySelector('.modal-text').textContent = message;
+  $('#modal-alert').modal('show');
+}
 
 function handleFileSelect(event) {
   const file = event.target.files[0];
