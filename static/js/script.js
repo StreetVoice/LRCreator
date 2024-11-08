@@ -35,7 +35,6 @@ function init() {
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
   tagButton.addEventListener('keydown', handleTagButtonKeydown);
-  exportButton.addEventListener('keydown', handleExportButtonKeydown);
   document.addEventListener('keydown', handleKeyPress);
 
   initWavesurfer();
@@ -104,13 +103,6 @@ function handleTagButtonKeydown(event) {
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
     tagCurrentLine();
-  }
-}
-
-function handleExportButtonKeydown(event) {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    exportLRC();
   }
 }
 
@@ -240,12 +232,6 @@ function updateCurrentLine() {
   } else {
     tagButton.disabled = true;
   }
-
-  // Check if all lines are tagged
-  const allTagged = lyrics.every(line => TAG_REGEX.test(line));
-  exportButton.disabled = !allTagged;
-
-  exportButton.setAttribute('aria-label', exportButton.disabled ? 'Export not available yet' : 'Export LRC file');
 }
 
 function exportLRC() {
