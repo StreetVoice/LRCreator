@@ -67,8 +67,7 @@ function initWavesurfer() {
   });
 
   wavesurfer.on('error', function (e) {
-    console.error('WaveSurfer error:', e);
-    alert('Error loading audio file. Please try again with a different file.');
+    showAlert('檔案有問題，請檢查後再重試');
   });
 
   wavesurfer.on('loading', function (percent) {
