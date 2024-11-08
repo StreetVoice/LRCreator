@@ -86,7 +86,7 @@ function togglePlayPause() {
 }
 
 function handleLyricsInput() {
-  const newLyrics = lyricsTextarea.value.split('\n').filter(line => line.trim() !== '');
+  const newLyrics = lyricsTextarea.value.split('\n');
 
   lyrics = newLyrics.map(line => line.trim());
 
