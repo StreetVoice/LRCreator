@@ -98,6 +98,7 @@ function handleLyricsInput() {
   }
 
   updateCurrentLine();
+  copyButton.textContent = '複製';
 }
 
 function handlePastekLyrics() {
@@ -202,6 +203,7 @@ function setTextareaScrollTop() {
 }
 
 function updateLyricsTextarea() {
+  copyButton.textContent = '複製';
   lyricsTextarea.value = lyrics.join('\n');
 }
 
@@ -232,7 +234,7 @@ function exportLRC() {
 }
 
 function copyLyrics() {
-  const { value } = document.getElementById('lyrics-textarea');
+  const { value } = lyricsTextarea;
   const tempInput = document.createElement('textarea');
 
   tempInput.style = 'position: absolute; left: -1000px; top: -1000px';
@@ -243,8 +245,7 @@ function copyLyrics() {
   document.execCommand('copy');
   window.getSelection().removeAllRanges();
   document.body.removeChild(tempInput);
-
-  // TODO: 已複製樣式
+  copyButton.textContent = '已複製';
 }
 
 function uploadFile() {
