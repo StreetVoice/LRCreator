@@ -79,7 +79,10 @@ body {
 
 button {
   display: inline-flex;
-  text-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
@@ -104,25 +107,14 @@ button:disabled {
   background: #fff;
   color: #666;
 }
-.btn-white:not(:disabled):hover {
-  background: #d2d2d2;
-}
 
 .btn-red {
   border: 2px solid #f9595f;
   background: #f9595f;
   color: #fff;
 }
-.btn-red:not(:disabled):hover {
-  border: 2px solid #f72830;
-  background: #f72830;
-}
 
 .btn-circle {
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   border-radius: 50%;
   padding: 0;
   width: 60px;
@@ -138,6 +130,10 @@ button:disabled {
 .d-block {
   display: block;
 }
+.d-flex {
+  display: flex;
+}
+
 .text-center {
   text-align: center;
 }
@@ -284,12 +280,15 @@ h2 {
   resize: vertical;
   margin-bottom: 1rem;
 }
+#lyrics-textarea:focus { 
+  outline: none !important;
+  border-color: #f9595f;
+}
 .icon-arrow {
   font-size: 1.8rem;
   left: -2.2rem;
   top: 1rem;
 }
-
 /* Footer */
 footer {
   text-align: center;
@@ -387,7 +386,44 @@ footer {
 
 
 /* Responsive Design */
-@media (max-width: 992px) {
+@media (max-width: 767.98px) {
+  .btns-wrapper .d-flex {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .btns-wrapper .btn-white {
+    width: 30%;
+    margin-left: 0;
+  }
+  .btns-wrapper .btn-red {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .btns-wrapper {
+    display: flex;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .btns-wrapper .btn {
+    width: auto;
+  }
+  .btns-wrapper .btn-white,
+  .btns-wrapper .btn-red {
+    margin-left: .5rem;
+  }
+}
+@media (min-width: 992px) {
+  .btn-white:not(:disabled):hover {
+    background: #d2d2d2;
+  }
+  .btn-red:not(:disabled):hover {
+    border: 2px solid #f72830;
+    background: #f72830;
+  }
+}
+@media (max-width: 991.98px) {
   body {
     padding-bottom: 60px;
   }
