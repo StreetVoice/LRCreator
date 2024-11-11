@@ -275,8 +275,7 @@ h2 {
 /* Lyrics Input */
 #lyrics-textarea {
   width: 100%;
-  min-height: calc(100vh - 330px);
-  padding: 1rem;
+  padding: 1rem 1rem calc(100vh - 390px) 1rem;
   font-family: monospace;
   font-size: 1rem;
   line-height: 1.8;
@@ -423,14 +422,11 @@ footer {
   }
 
   #lyrics-textarea {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    min-height: 0;
+    padding: 1rem 0.5rem calc(100vh - 450px) 0.5rem;
+    font-size: 1rem;
   }
   .icon-arrow {
-    font-size: 1.3rem;
-    left: -1.6rem;
-    top: 0.7rem;
+    display: none;
   }
   header {
     display: block;
