@@ -299,19 +299,16 @@ function setPlayState(state) {
     document.querySelector('.icon-play').classList.remove('d-none');
     document.querySelector('.icon-pause').classList.add('d-none');
     document.querySelector('.icon-loading').classList.add('d-none');
-    lyricsTextarea.style.overflow = 'auto';
     break;
   case 1:
     document.querySelector('.icon-play').classList.add('d-none');
     document.querySelector('.icon-pause').classList.add('d-none');
     document.querySelector('.icon-loading').classList.remove('d-none');
-    lyricsTextarea.style.overflow = 'auto';
     break;
   case 3:
     document.querySelector('.icon-play').classList.add('d-none');
     document.querySelector('.icon-pause').classList.remove('d-none');
     document.querySelector('.icon-loading').classList.add('d-none');
-    lyricsTextarea.style.overflow = 'hidden';
     break;
   default:
     break;

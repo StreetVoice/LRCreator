@@ -279,8 +279,9 @@ h2 {
   border-radius: 1rem;
   resize: vertical;
   margin-bottom: 1rem;
+  overflow-y: scroll;
 }
-#lyrics-textarea:focus { 
+#lyrics-textarea:focus {
   outline: none !important;
   border-color: #f9595f;
 }
