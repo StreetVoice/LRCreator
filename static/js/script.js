@@ -6,6 +6,7 @@ let wavesurfer;
 let audioFileName = '';
 let playState = 0; // 0: stop || 1: loading || 2: pause || 3: play
 const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
+const LYRIC_LINE_HEIGHT = 16 * 1.8;
 
 // Initialize the application
 function init() {
@@ -62,7 +63,7 @@ function initWavesurfer() {
   });
 
   wavesurfer.on('ready', function () {
-    setPlayState(2);
+    setPlayState(0);
     playPauseButton.disabled = false;
   });
 
@@ -199,7 +200,26 @@ function tagCurrentLine() {
 }
 
 function setTextareaScrollTop() {
-  lyricsTextarea.scrollTop = currentLineIndex * 16 * 1.8;
+  const div = document.createElement('div');
+  const { fontFamily, fontSize, lineHeight } = window.getComputedStyle(lyricsTextarea);
+
+  div.style.visibility = 'hidden';
+  div.style.position = 'absolute';
+  div.style.display = 'block';
+  div.style.fontFamily = fontFamily;
+  div.style.fontSize = fontSize;
+  div.style.lineHeight = lineHeight;
+  div.style.overflowY = 'scroll';
+  div.style.width = `${lyricsTextarea.clientWidth}px`;
+
+  for (let i = 0; i < currentLineIndex; i++) {
+    div.appendChild(document.createTextNode(lyrics[i] || ''));
+    div.appendChild(document.createElement('br')); // 模擬換行
+  }
+
+  document.body.appendChild(div);
+  lyricsTextarea.scrollTop = div.offsetHeight;
+  document.body.removeChild(div);
 }
 
 function updateLyricsTextarea() {
@@ -209,7 +229,6 @@ function updateLyricsTextarea() {
 
 function updateCurrentLine() {
   if (currentLineIndex < lyrics.length) {
-    const lineWithoutTag = lyrics[currentLineIndex].replace(TAG_REGEX, '');
     tagButton.disabled = false;
   } else {
     tagButton.disabled = true;
