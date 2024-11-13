@@ -11,7 +11,7 @@ body {
   color: #333;
   margin: 0 auto;
   padding: 0;
-  background-color: #f2f2f2;
+  background-color: #fff;
   position: relative;
   padding-bottom: 90px;
 }
@@ -75,6 +75,9 @@ body {
 }
 .position-absolute {
   position: absolute;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 
 button {
@@ -278,18 +281,51 @@ h2 {
   border: 2px solid #ccc;
   border-radius: 1rem;
   resize: vertical;
-  margin-bottom: 1rem;
   overflow-y: scroll;
+  position: relative;
+  z-index: 10;
+  background: transparent;
+  font-weight: 300;
 }
 #lyrics-textarea:focus {
   outline: none !important;
   border-color: #f9595f;
+}
+#lyrics-textarea.push-lyrics {
+  padding-top: 3rem;
+  padding-bottom: calc(100vh - 420px);
+}
+#lyrics-textarea.overflow-hidden {
+  padding-right: 23px;
+  overflow: hidden !important;
 }
 .icon-arrow {
   font-size: 1.8rem;
   left: -2.2rem;
   top: 1rem;
 }
+
+#current-line {
+  width: 100%;
+  top: 0;
+  bottom: 10px;
+  padding: 3rem 23px 1rem 1rem;
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 1.8;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  resize: vertical;
+  overflow-y: hidden;
+  position: absolute;
+  top: 0;
+  font-weight: 900;
+  z-index: 1;
+}
+.btns-wrapper {
+  margin-top: 1rem;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -460,7 +496,17 @@ footer {
 
   #lyrics-textarea {
     padding: 1rem 0.5rem calc(100vh - 450px) 0.5rem;
-    font-size: 1rem;
+  }
+  #lyrics-textarea.push-lyrics {
+    padding-top: 3rem;
+    padding-bottom: calc(100vh - 480px);
+  }
+  #lyrics-textarea.overflow-hidden {
+    padding-right: 23px;
+    overflow: hidden !important;
+  }
+  #current-line {
+    padding: 3rem 23px 1rem 0.5rem;
   }
   .icon-arrow {
     display: none;
