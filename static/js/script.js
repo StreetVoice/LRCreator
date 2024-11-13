@@ -36,6 +36,8 @@ function init() {
   uploadFileSection.addEventListener('dragover', handleDragOver);
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
+  window.addEventListener("resize", setTextareaScrollTop);
+
   initWavesurfer();
 }
 
