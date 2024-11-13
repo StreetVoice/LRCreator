@@ -1,12 +1,11 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, resetButton, playPauseButton, copyButton;
+let lyricsTextarea, tagButton, exportButton, resetButton, playPauseButton, copyButton, currentLineDiv;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
 let audioFileName = '';
 let playState = 0; // 0: stop || 1: loading || 2: pause || 3: play
 const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
-const LYRIC_LINE_HEIGHT = 16 * 1.8;
 
 // Initialize the application
 function init() {
@@ -19,6 +18,7 @@ function init() {
   copyButton = document.getElementById('copy-button');
   uploadFileSection = document.getElementById('file-section');
   lyricsSection = document.getElementById('lyrics-section');
+  currentLineDiv = document.getElementById('current-line');
 
   lyricsTextarea.addEventListener('paste', handlePastekLyrics);
   lyricsTextarea.addEventListener('input', handleLyricsInput);
@@ -91,6 +91,7 @@ function handleLyricsInput() {
   const newLyrics = lyricsTextarea.value.split('\n');
 
   lyrics = newLyrics.map(line => line.trim());
+  currentLineDiv.textContent = lyrics[0];
 
   // Find the first untagged line
   currentLineIndex = lyrics.findIndex(line => !line.match(TAG_REGEX));
@@ -100,6 +101,12 @@ function handleLyricsInput() {
 
   updateCurrentLine();
   copyButton.textContent = '複製';
+
+  if (lyricsTextarea.value.trim().length > 0) {
+    lyricsTextarea.classList.add('push-lyrics');
+  } else {
+    lyricsTextarea.classList.remove('push-lyrics');
+  }
 }
 
 function handlePastekLyrics() {
@@ -161,6 +168,7 @@ function backTagging() {
       currentLineIndex -= 1;
       wavesurfer.setCurrentTime(time);
       lyrics[currentLineIndex] = lyrics[currentLineIndex].replace(tag[0], '');
+      currentLineDiv.textContent = lyrics[currentLineIndex];
       updateLyricsTextarea();
       updateCurrentLine();
       setTextareaScrollTop();
@@ -171,6 +179,7 @@ function backTagging() {
 function resetTagging() {
   lyrics = lyrics.map(line => line.replace(TAG_REGEX, ''));
   currentLineIndex = 0;
+  currentLineDiv.textContent = lyrics[currentLineIndex];
   wavesurfer.setCurrentTime(0);
   updateLyricsTextarea();
   updateCurrentLine();
@@ -192,6 +201,7 @@ function tagCurrentLine() {
     if (currentLineIndex === -1) {
       currentLineIndex = lyrics.length; // All subsequent lines are tagged
     }
+    currentLineDiv.textContent = lyrics[currentLineIndex];
 
     updateLyricsTextarea();
     updateCurrentLine();
@@ -201,14 +211,16 @@ function tagCurrentLine() {
 
 function setTextareaScrollTop() {
   const div = document.createElement('div');
-  const { fontFamily, fontSize, lineHeight } = window.getComputedStyle(lyricsTextarea);
+  const { fontFamily, fontSize, fontWeight, lineHeight } = window.getComputedStyle(lyricsTextarea);
 
   div.style.visibility = 'hidden';
   div.style.position = 'absolute';
   div.style.display = 'block';
   div.style.fontFamily = fontFamily;
   div.style.fontSize = fontSize;
+  div.style.fontWeight = fontWeight;
   div.style.lineHeight = lineHeight;
+  div.style.paddingRight = '23px';
   div.style.overflowY = 'scroll';
   div.style.width = `${lyricsTextarea.clientWidth}px`;
 
@@ -313,21 +325,28 @@ function setPlayState(state) {
   playState = state;
 
   switch (playState) {
-  case 0:
-  case 2:
+  case 0: // stop
+  case 2: // pause
     document.querySelector('.icon-play').classList.remove('d-none');
     document.querySelector('.icon-pause').classList.add('d-none');
     document.querySelector('.icon-loading').classList.add('d-none');
+    lyricsTextarea.classList.remove('overflow-hidden');
+    currentLineDiv.classList.remove('d-block');
+    currentLineDiv.classList.add('d-none');
     break;
-  case 1:
+  case 1: // loading
     document.querySelector('.icon-play').classList.add('d-none');
     document.querySelector('.icon-pause').classList.add('d-none');
     document.querySelector('.icon-loading').classList.remove('d-none');
+    lyricsTextarea.classList.remove('overflow-hidden');
     break;
-  case 3:
+  case 3: // playing
     document.querySelector('.icon-play').classList.add('d-none');
     document.querySelector('.icon-pause').classList.remove('d-none');
     document.querySelector('.icon-loading').classList.add('d-none');
+    lyricsTextarea.classList.add('overflow-hidden');
+    currentLineDiv.classList.add('d-block');
+    currentLineDiv.classList.remove('d-none');
     break;
   default:
     break;
