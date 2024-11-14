@@ -222,7 +222,8 @@ function setTextareaScrollTop() {
   div.style.fontSize = fontSize;
   div.style.fontWeight = fontWeight;
   div.style.lineHeight = lineHeight;
-  div.style.paddingRight = '23px';
+  div.style.paddingLeft = '12px';
+  div.style.paddingRight = '12px';
   div.style.overflowY = 'scroll';
   div.style.width = `${lyricsTextarea.clientWidth}px`;
 
