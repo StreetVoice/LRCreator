@@ -96,6 +96,7 @@ button {
   padding: 8px 15px;
   cursor: pointer;
   transition: all 0.3s ease;
+  touch-action: manipulation;
 }
 button:not(:first-child) {
   margin-left: .25rem;
@@ -499,18 +500,18 @@ footer a {
   }
 
   #lyrics-textarea {
-    padding: 1rem 0.5rem calc(100vh - 490px) 0.5rem;
+    padding: 1rem 0.75rem calc(100vh - 540px) 0.75rem;
   }
   #lyrics-textarea.push-lyrics {
     padding-top: 3rem;
-    padding-bottom: calc(100vh - 520px);
+    padding-bottom: calc(100vh - 570px);
   }
   #lyrics-textarea.overflow-hidden {
-    padding-right: 0.5rem;
+    padding-right: 0.75rem;
     overflow: hidden !important;
   }
   #current-line {
-    padding: 3rem 0.5rem 1rem 0.5rem;
+    padding: 3rem 0.75rem 1rem 0.75rem;
   }
   .icon-arrow {
     display: none;
@@ -529,6 +530,8 @@ footer a {
   }
   .dashed-block {
     min-height: 0;
-    padding: 2rem 1rem;
+  }
+  footer {
+    margin-top: 1rem;
   }
 }
