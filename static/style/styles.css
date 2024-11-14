@@ -79,6 +79,10 @@ body {
 .overflow-hidden {
   overflow: hidden;
 }
+a,
+button {
+  outline: none !important;
+}
 
 button {
   display: inline-flex;
