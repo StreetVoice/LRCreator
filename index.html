@@ -38,6 +38,9 @@
         <div id="current-line" class="d-none" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div class="btns-wrapper">
+        <div class="d-block">
+          <button class="btn-white" data-toggle="modal" data-target="#modal-info" aria-label="歌曲資訊">歌曲資訊</button>
+        </div>
         <div class="d-flex">
           <button id="back-button" class="btn-white" aria-label="上一句">上一句</button>
           <button id="reset-button" class="btn-white" aria-label="重來">重來</button>
@@ -79,6 +82,22 @@
           <p class="modal-text"></p>
         </div>
         <div class="modal-footer"><button type="button" class="btn btn-white" data-dismiss="modal">確定</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-info" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <input type="text" placeholder="歌名">
+          <input type="text" placeholder="演唱者">
+          <input type="text" placeholder="所屬專輯">
+          <input type="text" placeholder="作詞作曲">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-red" data-dismiss="modal">確定</button>
+        </div>
       </div>
     </div>
   </div>
