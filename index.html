@@ -55,16 +55,92 @@
   </main>
 
   <footer>
-    <p><a href="https://en.wikipedia.org/wiki/LRC_(file_format)" target="_blank" class="text-red">什麼是 LRC format？</a></p>
     <p><small>&copy; StreetVoice 街聲.</small></p>
   </footer>
 
+  <div class="tips-wrapper d-flex collapse" id="collapse-tips">
+    <button class="btn btn-white collapsed" type="button" data-toggle="collapse" data-target="#collapse-tips" aria-expanded="false" aria-controls="collapse-tips">
+      <span class="icon-bulb"></span>
+      <span class="icon-close"></span>
+    </button>
+    <div class="tips-info">
+      <h3>快捷鍵</h3>
+      <ul>
+        <li>
+          <span class="badge">Space</span><span>→</span><span>標註這一行</span>
+        </li>
+        <li>
+          <span class="badge">Tab</span><span>→</span><span>播放 / 暫停</span>
+        </li>
+        <li>
+          <span class="badge">Z</span><span>→</span><span>上一步</span>
+        </li>
+        <li>
+          <span class="badge">B</span><span>→</span><span>快退 5 秒</span>
+        </li>
+        <li>
+          <span class="badge">F</span><span>→</span><span>快進 5 秒</span>
+        </li>
+      </ul>
+      <h3>按鈕說明</h3>
+      <ul>
+        <li>
+          <b>上一句：</b>清除上一句的時間標記
+        </li>
+        <li>
+          <b>重來：</b>清除所有時間標記
+        </li>
+        <li>
+          <b>複製：</b>複製所有文字
+        </li>
+        <li>
+          <b>匯出：</b>匯出檔案
+        </li>
+        <li>
+          <span class="icon-speed"></span>：播放速度
+        </li>
+        <li>
+          <span class="icon-backward"></span>：快退 5 秒
+        </li>
+        <li>
+          <span class="icon-forward"></span>：快進 5 秒
+        </li>
+        <li>
+          <span class="icon-play"></span> / <span class="icon-pause"></span>：播放 / 暫停
+        </li>
+        <li>
+          <span class="icon-time"></span>：標記時間
+        </li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
   <section id="audio-player" class="show">
     <div id="waveform"></div>
-    <div id="waveform-controls" class="position-relative">
+    <div id="waveform-controls" class="position-relative d-flex">
       <div class="tooltip position-absolute">
         點擊播放按鈕後，再在要標記的時間點擊標記按鈕就可以囉！
       </div>
+      <div class="dropup d-inline-flex position-relative">
+        <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="icon-speed"></span>
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">0.25</a>
+          <a class="dropdown-item" href="#">0.5</a>
+          <a class="dropdown-item" href="#">0.75</a>
+          <a class="dropdown-item active" href="#"><span class="icon-check"></span>正常</a>
+          <a class="dropdown-item" href="#">1.25</a>
+          <a class="dropdown-item" href="#">1.5</a>
+        </div>
+      </div>
+      <button class="btn-link">
+        <span class="icon-backward"></span>
+      </button>
+      <button class="btn-link">
+        <span class="icon-forward"></span>
+      </button>
       <button id="playPause" class="btn-circle btn-white" disabled>
         <span class="icon-play"></span>
         <span class="icon-pause d-none"></span>
@@ -82,6 +158,21 @@
           <p class="modal-text"></p>
         </div>
         <div class="modal-footer"><button type="button" class="btn btn-white" data-dismiss="modal">確定</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-leave" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p class="modal-text">
+            你還沒有複製或是匯出，確定要離開嗎？
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-red" data-dismiss="modal">離開</button>
+        </div>
       </div>
     </div>
   </div>
@@ -104,6 +195,9 @@
   <script src="static/libs/jquery-3.6.0.min.js"></script>
   <script src="static/libs/util.js"></script>
   <script src="static/libs/modal.js"></script>
+  <script src="static/libs/popper.min.js"></script>
+  <script src="static/libs/dropdown.js"></script>
+  <script src="static/libs/collapse.js"></script>
   <script src="static/js/script.js"></script>
 </body>
 
