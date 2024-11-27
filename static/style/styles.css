@@ -148,17 +148,10 @@ button:disabled {
   height: 60px;
   font-size: 1.6rem;
 }
-.btn-circle.btn-sm {
-  border-radius: 50%;
-  padding: 0;
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
-}
 .btn-link {
   color: #777;
   padding: 0 0.1rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
   border: none;
   background: transparent;
   text-decoration: none;
@@ -286,6 +279,7 @@ li span {
 }
 .dashed-block h2 {
   margin-top: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 /* Audio Player */
@@ -312,14 +306,14 @@ li span {
   opacity: 1;
 }
 #waveform {
-  width: calc(100% - 280px);
+  width: calc(100% - 290px);
   height: 60px;
 }
 #waveform wave {
   height: 60px !important;
 }
 .tooltip {
-  width: 150px;
+  width: 140px;
   right: -5px;
   z-index: 1000;
   padding: .6rem;
@@ -338,11 +332,11 @@ li span {
   display: block;
   position: absolute;
   left: 50%;
-  margin-left: -6px;
-  bottom: -6px;
-  width: 12px;
-  height: 12px;
-  border-bottom-left-radius: 5px;
+  margin-left: -5px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  border-bottom-left-radius: 3px;
   background-color: #f9595f;
   transform: rotate(-60deg) skewX(-30deg) scale(1, .866);
   z-index: 2;
@@ -580,7 +574,7 @@ footer a {
   background: #333;
   color: #fff;
   padding: 0.25rem 1.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   overflow-y: auto;
 }
 .tips-info h3 {
@@ -675,15 +669,21 @@ footer a {
     justify-content: center;
     border-radius: 50%;
     padding: 0;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
   .btn-circle:not(:first-child) {
     margin-left: .35rem;
   }
+  .btn-link {
+    font-size: 1.6rem;
+  }
+  .tooltip:before {
+    left: 67%;
+  }
   #waveform {
-    width: calc(100% - 230px);
+    width: calc(100% - 205px);
     height: 40px;
   }
   #waveform wave {
