@@ -146,7 +146,7 @@ button:disabled {
   padding: 0;
   width: 60px;
   height: 60px;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 .btn-link {
   color: #777;
@@ -508,7 +508,7 @@ footer a {
   float: left;
   width: 8rem;
   padding: 0.5rem 0;
-  margin-left: -4rem;
+  margin-left: -4.5rem;
   font-size: 1rem;
   text-align: left;
   list-style: none;
@@ -549,7 +549,7 @@ footer a {
   z-index: 100;
 }
 .tips-wrapper .btn-dark {
-  width: 50px;
+  width: 45px;
   height: 50px;
   margin-top: 1rem;
   padding: 0;
@@ -583,9 +583,9 @@ footer a {
 }
 .tips-info [class^="icon-"],
 .tips-info [class*=" icon-"] {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-right: 0;
-  vertical-align: text-bottom;
+  vertical-align: sub;
 }
 .tips-wrapper .btn-dark:not(.collapsed) .icon-bulb {
   display: none;
@@ -724,5 +724,8 @@ footer a {
   }
   footer {
     margin-top: 1rem;
+  }
+  .tips-wrapper .btn-dark {
+    margin-top: 2rem;
   }
 }
