@@ -213,7 +213,7 @@ function tagCurrentLine() {
 
 function setTextareaScrollTop() {
   const div = document.createElement('div');
-  const { fontFamily, fontSize, fontWeight, lineHeight } = window.getComputedStyle(lyricsTextarea);
+  const { fontFamily, fontSize, fontWeight, lineHeight, paddingLeft, paddingRight } = window.getComputedStyle(lyricsTextarea);
 
   div.style.visibility = 'hidden';
   div.style.position = 'absolute';
@@ -222,8 +222,8 @@ function setTextareaScrollTop() {
   div.style.fontSize = fontSize;
   div.style.fontWeight = fontWeight;
   div.style.lineHeight = lineHeight;
-  div.style.paddingLeft = '12px';
-  div.style.paddingRight = '12px';
+  div.style.paddingLeft = paddingLeft;
+  div.style.paddingRight = paddingRight;
   div.style.overflowY = 'scroll';
   div.style.width = `${lyricsTextarea.clientWidth}px`;
 
