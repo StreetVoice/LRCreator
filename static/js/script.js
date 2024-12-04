@@ -250,8 +250,17 @@ function updateCurrentLine() {
   }
 }
 
+
+function generateSongInfo() {
+  const values = Object.entries(Object.fromEntries(new FormData(document.getElementById('song-info-form')))).filter(([key, value]) => value.trim() !== '');
+
+  return values.map(([key, value]) => `[${key}:${value}]`);
+}
+
+
 function exportLRC() {
-  const lrcContent = lyrics.join('\n');
+  const songInfo = generateSongInfo();
+  const lrcContent = songInfo.concat(lyrics).join('\n');
   const blob = new Blob([lrcContent], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

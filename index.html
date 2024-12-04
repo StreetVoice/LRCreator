@@ -178,10 +178,12 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <input type="text" placeholder="歌名">
-          <input type="text" placeholder="演唱者">
-          <input type="text" placeholder="所屬專輯">
-          <input type="text" placeholder="作詞作曲">
+          <form id="song-info-form">
+            <input type="text" name="ti" placeholder="歌名">
+            <input type="text" name="ar" placeholder="演唱者">
+            <input type="text" name="al" placeholder="所屬專輯">
+            <input type="text" name="au" placeholder="作詞作曲">
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
