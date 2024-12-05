@@ -36,6 +36,9 @@ function init() {
   uploadFileSection.addEventListener('dragover', handleDragOver);
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
+  document.querySelector('.btn-link .icon-backward').addEventListener('click', handleBackward);
+  document.querySelector('.btn-link .icon-forward').addEventListener('click', handleForward);
+
   window.addEventListener("resize", setTextareaScrollTop);
 
   initWavesurfer();
@@ -75,6 +78,11 @@ function initWavesurfer() {
 
   wavesurfer.on('loading', function (percent) {
     setPlayState(1);
+  });
+
+  wavesurfer.on('finish', function () {
+    wavesurfer.setCurrentTime(0);
+    setPlayState(0);
   });
 }
 
@@ -362,6 +370,26 @@ function setPlayState(state) {
     break;
   default:
     break;
+  }
+}
+
+function handleBackward() {
+  let currentTime = wavesurfer.getCurrentTime() - 5;
+
+  if (currentTime < 0) currentTime = 0;
+  wavesurfer.setCurrentTime(currentTime);
+}
+
+function handleForward() {
+  const duration = wavesurfer.getDuration();
+  let currentTime = wavesurfer.getCurrentTime() + 5;
+
+  if (currentTime >= duration) {
+    wavesurfer.stop();
+    wavesurfer.setCurrentTime(0);
+    setPlayState(0);
+  } else {
+    wavesurfer.setCurrentTime(currentTime);
   }
 }
 
