@@ -1,5 +1,5 @@
 // Global variables
-let lyricsTextarea, tagButton, exportButton, resetButton, playPauseButton, copyButton, currentLineDiv;
+let lyricsTextarea, tagButton, exportButton, prevLineButton, resetButton, playPauseButton, copyButton, currentLineDiv, backwardBtn, forwardBtn;
 let lyrics = [];
 let currentLineIndex = 0;
 let wavesurfer;
@@ -12,13 +12,15 @@ function init() {
   lyricsTextarea = document.getElementById('lyrics-textarea');
   tagButton = document.getElementById('tag-button');
   exportButton = document.getElementById('export-button');
-  backButton = document.getElementById('back-button');
+  prevLineButton = document.getElementById('back-button');
   resetButton = document.getElementById('reset-button');
   playPauseButton = document.getElementById('playPause');
   copyButton = document.getElementById('copy-button');
   uploadFileSection = document.getElementById('file-section');
   lyricsSection = document.getElementById('lyrics-section');
   currentLineDiv = document.getElementById('current-line');
+  backwardBtn = document.querySelector('.btn-link .icon-backward');
+  forwardBtn = document.querySelector('.btn-link .icon-forward');
 
   lyricsTextarea.addEventListener('paste', handlePastekLyrics);
   lyricsTextarea.addEventListener('input', handleLyricsInput);
@@ -26,7 +28,7 @@ function init() {
 
   tagButton.addEventListener('click', tagCurrentLine);
   exportButton.addEventListener('click', exportLRC);
-  backButton.addEventListener('click', backTagging);
+  prevLineButton.addEventListener('click', backTagging);
   resetButton.addEventListener('click', resetTagging);
   playPauseButton.addEventListener('click', togglePlayPause);
   copyButton.addEventListener('click', copyLyrics);
@@ -36,8 +38,10 @@ function init() {
   uploadFileSection.addEventListener('dragover', handleDragOver);
   document.getElementById('audio-file').addEventListener('change', handleFileSelect);
 
-  document.querySelector('.btn-link .icon-backward').addEventListener('click', handleBackward);
-  document.querySelector('.btn-link .icon-forward').addEventListener('click', handleForward);
+  backwardBtn.addEventListener('click', handleBackward);
+  forwardBtn.addEventListener('click', handleForward);
+
+  document.addEventListener('keydown', handleKeydown);
 
   window.addEventListener("resize", setTextareaScrollTop);
 
@@ -390,6 +394,26 @@ function handleForward() {
     setPlayState(0);
   } else {
     wavesurfer.setCurrentTime(currentTime);
+  }
+}
+
+function handleKeydown(e) {
+  if (document.activeElement === lyricsTextarea) return;
+
+  const key = e.key.toLowerCase();
+
+  if (key === ' ') {
+    e.preventDefault();
+    tagButton.click();
+  } else if (key === 'z') {
+    prevLineButton.click();
+  } else if (key === 'tab') {
+    e.preventDefault();
+    playPauseButton.click();
+  } else if (key === 'b') {
+    backwardBtn.click();
+  } else if (key === 'f') {
+    forwardBtn.click();
   }
 }
 
