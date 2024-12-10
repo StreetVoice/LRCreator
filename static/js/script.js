@@ -79,7 +79,7 @@ function initWavesurfer() {
   });
 
   wavesurfer.on('error', function (e) {
-    showAlert('檔案有問題，請檢查後再重試');
+    showAlert(localeObj[35]);
   });
 
   wavesurfer.on('loading', function (percent) {
@@ -326,7 +326,7 @@ function handleDrop(e) {
       },
     });
   } else {
-    showAlert('上傳格式限 MP3');
+    showAlert(localeObj[34]);
   }
 }
 

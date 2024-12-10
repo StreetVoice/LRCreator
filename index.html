@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LRC 動態歌詞產生器</title>
+  <title class="i18n" data-i18n-id="1">LRC 動態歌詞產生器</title>
   <link rel="shortcut icon" href="static/images/ico/favicon.ico" />
   <link rel="stylesheet" href="static/style/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
 <body>
   <header class="text-center">
     <img src="static/images/logo-sv-r.svg" />
-    <h1>LRC 動態歌詞產生器</h1>
+    <h1 class="i18n" data-i18n-id="1">LRC 動態歌詞產生器</h1>
   </header>
 
   <main>
@@ -25,8 +25,8 @@
       <div class="dashed-block text-center">
         <div>
           <span class="icon-plus text-red font-size-xl"></span>
-          <h2>上傳歌曲</h2>
-          <p class="text-muted"><small>請放心！我們不會取得你的音檔，你的歌曲也不會經此上傳到任何地方或作為其他用途。</small></p>
+          <h2 class="i18n" data-i18n-id="2">上傳歌曲</h2>
+          <p class="text-muted"><small class="i18n" data-i18n-id="3">請放心！我們不會取得你的音檔，你的歌曲也不會經此上傳到任何地方或作為其他用途。</small></p>
         </div>
       </div>
       <input class="d-none" type="file" id="audio-file" accept="audio/mpeg" aria-label="上傳歌曲">
@@ -34,20 +34,20 @@
 
     <section id="lyrics-section" class="d-none">
       <div class="position-relative">
-        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="請輸入歌詞" placeholder="請輸入歌詞"></textarea>
+        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="請輸入歌詞" placeholder="請輸入歌詞" class="i18n-aria-label i18n-placeholder" data-i18n-id="4"></textarea>
         <div id="current-line" class="d-none" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div class="btns-wrapper">
         <div class="d-block">
-          <button class="btn-white" data-toggle="modal" data-target="#modal-info" aria-label="歌曲資訊">歌曲資訊</button>
+          <button class="btn-white i18n i18n-aria-label" data-toggle="modal" data-target="#modal-info" aria-label="歌曲資訊" data-i18n-id="5">歌曲資訊</button>
         </div>
         <div class="d-flex">
-          <button id="back-button" class="btn-white" aria-label="上一句">上一句</button>
-          <button id="reset-button" class="btn-white" aria-label="重來">重來</button>
-          <button id="copy-button" class="btn-white" aria-label="複製">複製</button>
+          <button id="back-button" class="btn-white i18n i18n-aria-label" aria-label="上一句" data-i18n-id="6">上一句</button>
+          <button id="reset-button" class="btn-white i18n i18n-aria-label" aria-label="重來" data-i18n-id="7">重來</button>
+          <button id="copy-button" class="btn-white i18n i18n-aria-label" aria-label="複製" data-i18n-id="8">複製</button>
         </div>
         <div class="d-block">
-          <button id="export-button" class="btn-red" aria-label="匯出">匯出</button>
+          <button id="export-button" class="btn-red i18n i18n-aria-label" aria-label="匯出" data-i18n-id="9">匯出</button>
         </div>
       </div>
       </div>
@@ -55,7 +55,7 @@
   </main>
 
   <footer>
-    <p><small>&copy; StreetVoice 街聲.</small></p>
+    <p><small class="i18n" data-i18n-id="10">&copy; StreetVoice 街聲.</small></p>
   </footer>
 
   <div class="tips-wrapper d-flex collapse" id="collapse-tips">
@@ -64,49 +64,49 @@
       <span class="icon-close"></span>
     </button>
     <div class="tips-info">
-      <h3>按鈕說明</h3>
+      <h3 class="i18n" data-i18n-id="11">按鈕說明</h3>
       <ul>
         <li>
-          <span class="icon-speed"></span>：播放速度
+          <span class="icon-speed"></span>：<span class="i18n" data-i18n-id="12">播放速度</span>
         </li>
         <li>
-          <span class="icon-backward"></span>：快退 5 秒
+          <span class="icon-backward"></span>：<span class="i18n" data-i18n-id="13">快退 5 秒</span>
         </li>
         <li>
-          <span class="icon-forward"></span>：快進 5 秒
+          <span class="icon-forward"></span>：<span class="i18n" data-i18n-id="14">快進 5 秒</span>
         </li>
         <li>
-          <span class="icon-time"></span>：標記時間
+          <span class="icon-time"></span>：<span class="i18n" data-i18n-id="15">標記時間</span>
         </li>
         <li>
-          <b>上一句：</b>清除上一句的時間標記
+          <b class="i18n" data-i18n-id="6">上一句</b><b>：</b><span class="i18n" data-i18n-id="16">清除上一句的時間標記</span>
         </li>
         <li>
-          <b>重來：</b>清除所有時間標記
+          <b class="i18n" data-i18n-id="7">重來</b><b>：</b><span class="i18n" data-i18n-id="17">清除所有時間標記</span>
         </li>
         <li>
-          <b>複製：</b>複製所有文字
+          <b class="i18n" data-i18n-id="8">複製</b><b>：</b><span class="i18n" data-i18n-id="18">複製所有文字</span>
         </li>
         <li>
-          <b>匯出：</b>匯出檔案
+          <b class="i18n" data-i18n-id="9">匯出</b><b>：</b><span class="i18n" data-i18n-id="19">匯出檔案</span>
         </li>
       </ul>
-      <h3>電腦快捷鍵</h3>
+      <h3 class="i18n" data-i18n-id="20">電腦快捷鍵</h3>
       <ul>
         <li>
-          <span class="badge">Space</span><span>➔</span><span>標記這一行</span>
+          <span class="badge">Space</span><span>➔</span><span class="i18n" data-i18n-id="21">標記這一行</span>
         </li>
         <li>
-          <span class="badge">Tab</span><span>➔</span><span>播放 / 暫停</span>
+          <span class="badge">Tab</span><span>➔</span><span class="i18n" data-i18n-id="22">播放 / 暫停</span>
         </li>
         <li>
-          <span class="badge">Z</span><span>➔</span><span>上一句</span>
+          <span class="badge">Z</span><span>➔</span><span class="i18n" data-i18n-id="6">上一句</span>
         </li>
         <li>
-          <span class="badge">B</span><span>➔</span><span>快退 5 秒</span>
+          <span class="badge">B</span><span>➔</span><span class="i18n" data-i18n-id="13">快退 5 秒</span>
         </li>
         <li>
-          <span class="badge">F</span><span>➔</span><span>快進 5 秒</span>
+          <span class="badge">F</span><span>➔</span><span class="i18n" data-i18n-id="14">快進 5 秒</span>
         </li>
       </ul>
 
@@ -117,7 +117,7 @@
   <section id="audio-player" class="show">
     <div id="waveform"></div>
     <div id="waveform-controls" class="position-relative d-flex">
-      <div class="tooltip position-absolute">
+      <div class="tooltip position-absolute i18n" data-i18n-id="23">
         點擊播放按鈕後，再在要標記的時間點擊標記按鈕就可以囉！
       </div>
       <div class="dropup d-inline-flex position-relative">
@@ -128,7 +128,7 @@
           <a class="dropdown-item" href="#">0.25</a>
           <a class="dropdown-item" href="#">0.5</a>
           <a class="dropdown-item" href="#">0.75</a>
-          <a class="dropdown-item active" href="#"><span class="icon-check"></span>正常</a>
+          <a class="dropdown-item active" href="#"><span class="icon-check"></span class="i18n" data-i18n-id="24">正常</a>
           <a class="dropdown-item" href="#">1.25</a>
           <a class="dropdown-item" href="#">1.5</a>
         </div>
@@ -144,7 +144,7 @@
         <span class="icon-pause d-none"></span>
         <span class="icon-loading d-none"></span>
       </button>
-      <button id="tag-button" class="btn-circle btn-red" aria-label="標記">
+      <button id="tag-button" class="btn-circle btn-red i18n-aria-label" aria-label="標記時間" data-i18n-id="15">
         <span class="icon-time"></span>
       </button>
     </div>
@@ -155,7 +155,7 @@
         <div class="modal-body">
           <p class="modal-text"></p>
         </div>
-        <div class="modal-footer"><button type="button" class="btn btn-white" data-dismiss="modal">關閉</button></div>
+        <div class="modal-footer"><button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="25">關閉</button></div>
       </div>
     </div>
   </div>
@@ -163,13 +163,13 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="modal-text">
+          <p class="modal-text i18n" data-i18n-id="26">
             你還沒有複製或是匯出，確定要離開嗎？
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-red" data-dismiss="modal">離開</button>
+          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">取消</button>
+          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="28">離開</button>
         </div>
       </div>
     </div>
@@ -179,19 +179,20 @@
       <div class="modal-content">
         <div class="modal-body">
           <form id="song-info-form">
-            <input type="text" name="ti" placeholder="歌名">
-            <input type="text" name="ar" placeholder="演唱者">
-            <input type="text" name="al" placeholder="所屬專輯">
-            <input type="text" name="au" placeholder="作詞作曲">
+            <input class="i18n-placeholder" type="text" name="ti" placeholder="歌名" data-i18n-id="29">
+            <input class="i18n-placeholder" type="text" name="ar" placeholder="演唱者" data-i18n-id="30">
+            <input class="i18n-placeholder" type="text" name="al" placeholder="所屬專輯" data-i18n-id="31">
+            <input class="i18n-placeholder" type="text" name="au" placeholder="作詞作曲" data-i18n-id="32">
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-red" data-dismiss="modal">確定</button>
+          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">取消</button>
+          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="33">確定</button>
         </div>
       </div>
     </div>
   </div>
+  <script src="static/js/locale.js"></script>
   <script src="static/libs/jquery-3.6.0.min.js"></script>
   <script src="static/libs/util.js"></script>
   <script src="static/libs/modal.js"></script>
