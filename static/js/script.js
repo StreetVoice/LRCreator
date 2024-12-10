@@ -5,6 +5,7 @@ let currentLineIndex = 0;
 let wavesurfer;
 let audioFileName = '';
 let playState = 0; // 0: stop || 1: loading || 2: pause || 3: play
+let changed = false;
 const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
 
 // Initialize the application
@@ -44,6 +45,7 @@ function init() {
   document.addEventListener('keydown', handleKeydown);
 
   window.addEventListener("resize", setTextareaScrollTop);
+  window.addEventListener('beforeunload', handleBeforeunload);
 
   initWavesurfer();
 }
@@ -115,6 +117,7 @@ function handleLyricsInput() {
 
   updateCurrentLine();
   copyButton.textContent = '複製';
+  changed = true;
 
   if (lyricsTextarea.value.trim().length > 0) {
     lyricsTextarea.classList.add('push-lyrics');
@@ -127,6 +130,7 @@ function handlePastekLyrics() {
   if (!localStorage.getItem('show-sv-lrc-creator-tooltip')) {
     document.querySelector('.tooltip').classList.add('show');
     localStorage.setItem('show-sv-lrc-creator-tooltip', true);
+    changed = true;
     document.body.addEventListener('click', () => {
       document.querySelector('.tooltip').remove();
     }, { once : true });
@@ -286,6 +290,8 @@ function exportLRC() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+
+  changed = false;
 }
 
 function copyLyrics() {
@@ -301,6 +307,7 @@ function copyLyrics() {
   window.getSelection().removeAllRanges();
   document.body.removeChild(tempInput);
   copyButton.textContent = '已複製';
+  changed = false;
 }
 
 function uploadFile() {
@@ -414,6 +421,13 @@ function handleKeydown(e) {
     backwardBtn.click();
   } else if (key === 'f') {
     forwardBtn.click();
+  }
+}
+
+function handleBeforeunload(e) {
+  if (changed) {
+    e.preventDefault();
+    e.returnValue = '';
   }
 }
 
