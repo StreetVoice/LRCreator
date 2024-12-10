@@ -79,9 +79,13 @@ const locale = {
 
 let localeObj = {};
 
-function i18n() {
-  localeObj = /zh-tw/.test(navigator.language.toLowerCase()) ? locale['zh-tw'] : locale['en'];
+function getLocale() {
+  let language = localStorage.getItem('language') || /zh-tw/.test(navigator.language.toLowerCase()) ? 'zh-tw' : 'en';
+  localeObj = locale[language];
+  localStorage.setItem('language', language);
+};
 
+function i18n() {
   document.querySelectorAll('.i18n').forEach((element) => {
     element.textContent = localeObj[element.dataset.i18nId];
   });
@@ -95,4 +99,5 @@ function i18n() {
   });
 }
 
+getLocale();
 i18n();
