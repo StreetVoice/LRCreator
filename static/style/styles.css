@@ -306,7 +306,7 @@ li span {
   opacity: 1;
 }
 #waveform {
-  width: calc(100% - 290px);
+  width: calc(100% - 250px);
   height: 60px;
 }
 #waveform wave {
@@ -498,49 +498,6 @@ footer a {
   padding: 0 2rem 1.5rem 2rem;
 }
 
-/* dropdown-menu */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 50% !important;
-  z-index: 1000;
-  display: none;
-  float: left;
-  width: 8rem;
-  padding: 0.5rem 0;
-  margin-left: -4.5rem;
-  font-size: 1rem;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ccc;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-.dropdown-menu.show {
-  display: block;
-}
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.25rem 2rem;
-  clear: both;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-  color: #666;
-  text-decoration: none;
-  position: relative;
-}
-.dropdown-item.active .icon-check {
-  color: #f9595f;
-  position: absolute;
-  left: 0.55rem;
-  top: 0.55rem;
-}
-
 .tips-wrapper {
   position: fixed;
   right: 0;
@@ -683,7 +640,7 @@ footer a {
     left: 67%;
   }
   #waveform {
-    width: calc(100% - 205px);
+    width: calc(100% - 165px);
     height: 40px;
   }
   #waveform wave {
