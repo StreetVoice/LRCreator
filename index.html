@@ -4,22 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title class="i18n" data-i18n-id="1">LRC 動態歌詞產生器</title>
-  <meta name="description" content="世界上最好用的動態歌詞產生器">
-  <meta name="keywords" content="lrc, generator, creator, 動態歌詞產生器, 動態歌詞工具, 免費">
-  <meta property="og:image" content=""><!--  TODO -->
-  <meta property="og:url" content="https://streetvoice.com"><!--  TODO -->
+  <meta name="description" content="Ease of use LRC lyrics generator. Create synchronized lyrics effortlessly with this free online tool.">
+  <meta name="keywords" content="lrc, generator, creator, lyrics synchronization, free online tool for LRC, best LRC generator, lyrics synchronizer, lyrics sync">
+  <meta property="og:url" content="https://lrc-generator.streetvoice.com">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="LRC 動態歌詞產生器 | StreetVoice 街聲 - 最潮音樂社群">
-  <meta property="og:site_name" content="LRC 動態歌詞產生器">
-  <meta property="og:description" content="世界上最好用的動態歌詞產生器">
+  <meta property="og:title" content="LRC Lyrics Generator | Free Online Tool - powered by StreetVoice">
+  <meta property="og:site_name" content="LRC Lyrics Generator">
+  <meta property="og:description" content="Ease of use LRC lyrics generator. Create synchronized lyrics effortlessly with this free online tool.">
   <meta property="fb:app_id" content="160149997878" />
-  <link rel="canonical" href="https://streetvoice.com"><!--  TODO -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LRC Lyrics Generator | Free Online Tool - powered by StreetVoice">
+  <meta name="twitter:description" content="Ease of use LRC lyrics generator. Create synchronized lyrics effortlessly with this free online tool.">
+  <link rel="canonical" href="https://lrc-generator.streetvoice.com">
   <link rel="shortcut icon" href="static/images/ico/favicon.ico" />
   <link rel="stylesheet" href="static/style/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+HK:wght@200..900&display=swap" rel="stylesheet">
+  <title>LRC Lyrics Generator | Free Online Tool</title>
+  <script src="static/js/meta.js"></script>
   <script src="static/libs/wavesurfer.min.js"></script>
   <script src="static/libs/wavesurfer.cursor.min.js"></script>
 </head>
@@ -27,7 +30,7 @@
 <body>
   <header class="text-center">
     <img src="static/images/logo-sv-r.svg" />
-    <h1 class="i18n" data-i18n-id="1">LRC 動態歌詞產生器</h1>
+    <h1 class="i18n" data-i18n-id="1">LRC Lyrics Generator</h1>
   </header>
 
   <main>
@@ -35,29 +38,29 @@
       <div class="dashed-block text-center">
         <div>
           <span class="icon-plus text-red font-size-xl"></span>
-          <h2 class="i18n" data-i18n-id="2">上傳歌曲</h2>
-          <p class="text-muted"><small class="i18n" data-i18n-id="3">請放心！我們不會取得你的音檔，你的歌曲也不會經此上傳到任何地方或作為其他用途。</small></p>
+          <h2 class="i18n" data-i18n-id="2">Upload audio file here</h2>
+          <p class="text-muted"><small class="i18n" data-i18n-id="3">We will not access your audio files, and your song will not be uploaded anywhere or used for any other purposes.</small></p>
         </div>
       </div>
-      <input class="d-none" type="file" id="audio-file" accept="audio/mpeg" aria-label="上傳歌曲">
+      <input class="d-none" type="file" id="audio-file" accept="audio/mpeg" aria-label="Upload audio file here">
     </section>
 
     <section id="lyrics-section" class="d-none">
       <div class="position-relative">
-        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="請輸入歌詞" placeholder="請輸入歌詞" class="i18n-aria-label i18n-placeholder" data-i18n-id="4"></textarea>
+        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="Input lyrics" placeholder="Input lyrics" class="i18n-aria-label i18n-placeholder" data-i18n-id="4"></textarea>
         <div id="current-line" class="d-none" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div class="btns-wrapper">
         <div class="d-block">
-          <button class="btn-white i18n i18n-aria-label" data-toggle="modal" data-target="#modal-info" aria-label="歌曲資訊" data-i18n-id="5">歌曲資訊</button>
+          <button class="btn-white i18n i18n-aria-label" data-toggle="modal" data-target="#modal-info" aria-label="Song info" data-i18n-id="5">Song info</button>
         </div>
         <div class="d-flex">
-          <button id="back-button" class="btn-white i18n i18n-aria-label" aria-label="上一句" data-i18n-id="6">上一句</button>
-          <button id="reset-button" class="btn-white i18n i18n-aria-label" aria-label="重來" data-i18n-id="7">重來</button>
-          <button id="copy-button" class="btn-white i18n i18n-aria-label" aria-label="複製" data-i18n-id="8">複製</button>
+          <button id="back-button" class="btn-white i18n i18n-aria-label" aria-label="Previous line" data-i18n-id="6">Previous line</button>
+          <button id="reset-button" class="btn-white i18n i18n-aria-label" aria-label="Reset" data-i18n-id="7">Reset</button>
+          <button id="copy-button" class="btn-white i18n i18n-aria-label" aria-label="Copy" data-i18n-id="8">Copy</button>
         </div>
         <div class="d-block">
-          <button id="export-button" class="btn-red i18n i18n-aria-label" aria-label="匯出" data-i18n-id="9">匯出</button>
+          <button id="export-button" class="btn-red i18n i18n-aria-label" aria-label="Export" data-i18n-id="9">Export</button>
         </div>
       </div>
       </div>
@@ -65,7 +68,7 @@
   </main>
 
   <footer>
-    <p><small class="i18n" data-i18n-id="10">&copy; StreetVoice 街聲.</small></p>
+    <p><small class="i18n" data-i18n-id="10">&copy; StreetVoice.</small></p>
   </footer>
 
   <div class="tips-wrapper d-flex collapse" id="collapse-tips">
@@ -74,46 +77,46 @@
       <span class="icon-close"></span>
     </button>
     <div class="tips-info">
-      <h3 class="i18n" data-i18n-id="11">按鈕說明</h3>
+      <h3 class="i18n" data-i18n-id="11">Interface guide</h3>
       <ul>
         <li>
-          <span class="icon-backward"></span>：<span class="i18n" data-i18n-id="13">快退 5 秒</span>
+          <span class="icon-backward"></span>：<span class="i18n" data-i18n-id="13">Rewind 5 seconds</span>
         </li>
         <li>
-          <span class="icon-forward"></span>：<span class="i18n" data-i18n-id="14">快進 5 秒</span>
+          <span class="icon-forward"></span>：<span class="i18n" data-i18n-id="14">Fast forward 5 seconds</span>
         </li>
         <li>
-          <span class="icon-time"></span>：<span class="i18n" data-i18n-id="15">標記時間</span>
+          <span class="icon-time"></span>：<span class="i18n" data-i18n-id="15">Label with timestamp</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="6">上一句</b><b>：</b><span class="i18n" data-i18n-id="16">清除上一句的時間標記</span>
+          <b class="i18n" data-i18n-id="6">Previous line</b><b>：</b><span class="i18n" data-i18n-id="16">Clear previous line’s timestamp</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="7">重來</b><b>：</b><span class="i18n" data-i18n-id="17">清除所有時間標記</span>
+          <b class="i18n" data-i18n-id="7">Reset</b><b>：</b><span class="i18n" data-i18n-id="17">Clear all timestamps</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="8">複製</b><b>：</b><span class="i18n" data-i18n-id="18">複製所有文字</span>
+          <b class="i18n" data-i18n-id="8">Copy</b><b>：</b><span class="i18n" data-i18n-id="18">Copy all text</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="9">匯出</b><b>：</b><span class="i18n" data-i18n-id="19">匯出檔案</span>
+          <b class="i18n" data-i18n-id="9">Export</b><b>：</b><span class="i18n" data-i18n-id="19">Export file</span>
         </li>
       </ul>
-      <h3 class="i18n" data-i18n-id="20">電腦快捷鍵</h3>
+      <h3 class="i18n" data-i18n-id="20">Hotkeys</h3>
       <ul>
         <li>
-          <span class="badge">Space</span><span>➔</span><span class="i18n" data-i18n-id="21">標記這一行</span>
+          <span class="badge">Space</span><span>➔</span><span class="i18n" data-i18n-id="21">Label with timestamp</span>
         </li>
         <li>
-          <span class="badge">Tab</span><span>➔</span><span class="i18n" data-i18n-id="22">播放 / 暫停</span>
+          <span class="badge">Tab</span><span>➔</span><span class="i18n" data-i18n-id="22">Play / Pause</span>
         </li>
         <li>
-          <span class="badge">Z</span><span>➔</span><span class="i18n" data-i18n-id="6">上一句</span>
+          <span class="badge">Z</span><span>➔</span><span class="i18n" data-i18n-id="6">Previous line</span>
         </li>
         <li>
-          <span class="badge">B</span><span>➔</span><span class="i18n" data-i18n-id="13">快退 5 秒</span>
+          <span class="badge">B</span><span>➔</span><span class="i18n" data-i18n-id="13">Rewind 5 seconds</span>
         </li>
         <li>
-          <span class="badge">F</span><span>➔</span><span class="i18n" data-i18n-id="14">快進 5 秒</span>
+          <span class="badge">F</span><span>➔</span><span class="i18n" data-i18n-id="14">Fast forward 5 seconds</span>
         </li>
       </ul>
 
@@ -125,7 +128,7 @@
     <div id="waveform"></div>
     <div id="waveform-controls" class="position-relative d-flex">
       <div class="tooltip position-absolute i18n" data-i18n-id="23">
-        點擊播放按鈕後，再在要標記的時間點擊標記按鈕就可以囉！
+        Press Play, then tap the clock icon at the desired moment to add a timestamp.
       </div>
       <button class="btn-link">
         <span class="icon-backward"></span>
@@ -138,7 +141,7 @@
         <span class="icon-pause d-none"></span>
         <span class="icon-loading d-none"></span>
       </button>
-      <button id="tag-button" class="btn-circle btn-red i18n-aria-label" aria-label="標記時間" data-i18n-id="15">
+      <button id="tag-button" class="btn-circle btn-red i18n-aria-label" aria-label="Label with timestamp" data-i18n-id="15">
         <span class="icon-time"></span>
       </button>
     </div>
@@ -149,7 +152,7 @@
         <div class="modal-body">
           <p class="modal-text"></p>
         </div>
-        <div class="modal-footer"><button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="25">關閉</button></div>
+        <div class="modal-footer"><button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="25">Close</button></div>
       </div>
     </div>
   </div>
@@ -158,12 +161,12 @@
       <div class="modal-content">
         <div class="modal-body">
           <p class="modal-text i18n" data-i18n-id="26">
-            你還沒有複製或是匯出，確定要離開嗎？
+            You haven't copied or exported yet. Are you sure you want to leave?
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">取消</button>
-          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="28">離開</button>
+          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">Cancel</button>
+          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="28">Leave</button>
         </div>
       </div>
     </div>
@@ -173,15 +176,15 @@
       <div class="modal-content">
         <div class="modal-body">
           <form id="song-info-form">
-            <input class="i18n-placeholder" type="text" name="ti" placeholder="歌名" data-i18n-id="29">
-            <input class="i18n-placeholder" type="text" name="ar" placeholder="演唱者" data-i18n-id="30">
-            <input class="i18n-placeholder" type="text" name="al" placeholder="所屬專輯" data-i18n-id="31">
-            <input class="i18n-placeholder" type="text" name="au" placeholder="作詞作曲" data-i18n-id="32">
+            <input class="i18n-placeholder" type="text" name="ti" placeholder="Title" data-i18n-id="29">
+            <input class="i18n-placeholder" type="text" name="ar" placeholder="Artist" data-i18n-id="30">
+            <input class="i18n-placeholder" type="text" name="al" placeholder="Album" data-i18n-id="31">
+            <input class="i18n-placeholder" type="text" name="au" placeholder="Author" data-i18n-id="32">
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">取消</button>
-          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="33">確定</button>
+          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">Cancel</button>
+          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="33">Confirm</button>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 const locale = {
   'en': {
-    1: 'LRC Genetator',
+    1: 'LRC Lyrics Generator',
     2: 'Upload audio file here',
-    3: 'Don’t worry! We will not access your audio files, and your song will not be uploaded anywhere or used for any other purposes.',
+    3: 'We will not access your audio files, and your song will not be uploaded anywhere or used for any other purposes.',
     4: 'Input lyrics',
     5: 'Song info',
     6: 'Previous line',
@@ -15,14 +15,14 @@ const locale = {
     13: 'Rewind 5 seconds',
     14: 'Fast forward 5 seconds',
     15: 'Label with timestamp',
-    16: 'Clear previous line’s timestamp',
+    16: "Clear previous line's timestamp",
     17: 'Clear all timestamps',
     18: 'Copy all text',
     19: 'Export file',
     20: 'Hotkeys',
     21: 'Label with timestamp',
     22: 'Play / Pause',
-    23: 'Click the play button, then click the clock button at the desired moment to add timestamp label!',
+    23: 'Press Play, then tap the clock icon at the desired moment to add a timestamp.',
     24: 'Normal',
     25: 'Close',
     26: "You haven't copied or exported yet. Are you sure you want to leave?",
@@ -33,9 +33,8 @@ const locale = {
     31: 'Album',
     32: 'Author',
     33: 'Confirm',
-    34: 'The upload format is limited to .mp3',
+    34: 'The upload format is limited to MP3',
     35: 'Please check your file format and try again',
-    36: 'The Best LRC Generator in the World'
   },
   'zh-tw': {
     1: 'LRC 動態歌詞產生器',
@@ -71,18 +70,15 @@ const locale = {
     31: '所屬專輯',
     32: '作詞作曲',
     33: '確定',
-    34: '上傳格式限 .mp3',
+    34: '上傳格式限 MP3',
     35: '檔案有問題，請檢查後再重試',
-    36: '世界上最好用的動態歌詞產生器',
   }
 };
 
 let localeObj = {};
 
 function getLocale() {
-  let language = localStorage.getItem('language') || /zh-tw/.test(navigator.language.toLowerCase()) ? 'zh-tw' : 'en';
-  localeObj = locale[language];
-  localStorage.setItem('language', language);
+  localeObj = locale[localStorage.getItem('language')];
 };
 
 function i18n() {
