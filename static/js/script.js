@@ -7,6 +7,7 @@ let audioFileName = '';
 let playState = 0; // 0: stop || 1: loading || 2: pause || 3: play
 let changed = false;
 const TAG_REGEX = /^\[(\d{2}):(\d{2})\.(\d{2})\]/;
+const language = (/zh-tw/.test(navigator.language.toLowerCase()) ? 'zh-tw' : 'en');
 
 // Initialize the application
 function init() {
@@ -116,7 +117,7 @@ function handleLyricsInput() {
   }
 
   updateCurrentLine();
-  copyButton.textContent = '複製';
+  copyButton.textContent = language === 'en' ? 'Copy' : '複製';
   changed = true;
 
   if (lyricsTextarea.value.trim().length > 0) {
@@ -254,7 +255,7 @@ function setTextareaScrollTop() {
 }
 
 function updateLyricsTextarea() {
-  copyButton.textContent = '複製';
+  copyButton.textContent = language === 'en' ? 'Copy' : '複製';
   lyricsTextarea.value = lyrics.join('\n');
 }
 
@@ -306,7 +307,7 @@ function copyLyrics() {
   document.execCommand('copy');
   window.getSelection().removeAllRanges();
   document.body.removeChild(tempInput);
-  copyButton.textContent = '已複製';
+  copyButton.textContent = language === 'en' ? 'Copied!' : '已複製';
   changed = false;
 }
 

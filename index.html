@@ -15,6 +15,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LRC Lyrics Generator | Free Online Tool - powered by StreetVoice">
   <meta name="twitter:description" content="Ease of use LRC lyrics generator. Create synchronized lyrics effortlessly with this free online tool.">
+  <link rel="alternate" hreflang="en" href="https://lrc-generator.streetvoice.com/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://lrc-generator.streetvoice.com/zh-hant/" />
   <link rel="canonical" href="https://lrc-generator.streetvoice.com">
   <link rel="shortcut icon" href="static/images/ico/favicon.ico" />
   <link rel="stylesheet" href="static/style/styles.css">
@@ -22,7 +24,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+HK:wght@200..900&display=swap" rel="stylesheet">
   <title>LRC Lyrics Generator | Free Online Tool</title>
-  <script src="static/js/meta.js"></script>
   <script src="static/libs/wavesurfer.min.js"></script>
   <script src="static/libs/wavesurfer.cursor.min.js"></script>
 </head>
@@ -30,7 +31,7 @@
 <body>
   <header class="text-center">
     <img src="static/images/logo-sv-r.svg" />
-    <h1 class="i18n" data-i18n-id="1">LRC Lyrics Generator</h1>
+    <h1>LRC Lyrics Generator</h1>
   </header>
 
   <main>
@@ -38,8 +39,8 @@
       <div class="dashed-block text-center">
         <div>
           <span class="icon-plus text-red font-size-xl"></span>
-          <h2 class="i18n" data-i18n-id="2">Upload audio file here</h2>
-          <p class="text-muted"><small class="i18n" data-i18n-id="3">We will not access your audio files, and your song will not be uploaded anywhere or used for any other purposes.</small></p>
+          <h2>Upload audio file here</h2>
+          <p class="text-muted"><small>We will not access your audio files, and your song will not be uploaded anywhere or used for any other purposes.</small></p>
         </div>
       </div>
       <input class="d-none" type="file" id="audio-file" accept="audio/mpeg" aria-label="Upload audio file here">
@@ -47,20 +48,20 @@
 
     <section id="lyrics-section" class="d-none">
       <div class="position-relative">
-        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="Input lyrics" placeholder="Input lyrics" class="i18n-aria-label i18n-placeholder" data-i18n-id="4"></textarea>
+        <textarea id="lyrics-textarea" rows="1" cols="50" aria-label="Input lyrics" placeholder="Input lyrics"></textarea>
         <div id="current-line" class="d-none" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div class="btns-wrapper">
         <div class="d-block">
-          <button class="btn-white i18n i18n-aria-label" data-toggle="modal" data-target="#modal-info" aria-label="Song info" data-i18n-id="5">Song info</button>
+          <button class="btn-white" data-toggle="modal" data-target="#modal-info" aria-label="Song info">Song info</button>
         </div>
         <div class="d-flex">
-          <button id="back-button" class="btn-white i18n i18n-aria-label" aria-label="Previous line" data-i18n-id="6">Previous line</button>
-          <button id="reset-button" class="btn-white i18n i18n-aria-label" aria-label="Reset" data-i18n-id="7">Reset</button>
-          <button id="copy-button" class="btn-white i18n i18n-aria-label" aria-label="Copy" data-i18n-id="8">Copy</button>
+          <button id="back-button" class="btn-white" aria-label="Previous line">Previous line</button>
+          <button id="reset-button" class="btn-white" aria-label="Reset">Reset</button>
+          <button id="copy-button" class="btn-white" aria-label="Copy">Copy</button>
         </div>
         <div class="d-block">
-          <button id="export-button" class="btn-red i18n i18n-aria-label" aria-label="Export" data-i18n-id="9">Export</button>
+          <button id="export-button" class="btn-red" aria-label="Export">Export</button>
         </div>
       </div>
       </div>
@@ -68,7 +69,7 @@
   </main>
 
   <footer>
-    <p><small class="i18n" data-i18n-id="10">&copy; StreetVoice.</small></p>
+    <p><small>&copy; StreetVoice.</small></p>
   </footer>
 
   <div class="tips-wrapper d-flex collapse" id="collapse-tips">
@@ -77,46 +78,46 @@
       <span class="icon-close"></span>
     </button>
     <div class="tips-info">
-      <h3 class="i18n" data-i18n-id="11">Interface guide</h3>
+      <h3>Interface guide</h3>
       <ul>
         <li>
-          <span class="icon-backward"></span>：<span class="i18n" data-i18n-id="13">Rewind 5 seconds</span>
+          <span class="icon-backward"></span>：<span>Rewind 5 seconds</span>
         </li>
         <li>
-          <span class="icon-forward"></span>：<span class="i18n" data-i18n-id="14">Fast forward 5 seconds</span>
+          <span class="icon-forward"></span>：<span>Fast forward 5 seconds</span>
         </li>
         <li>
-          <span class="icon-time"></span>：<span class="i18n" data-i18n-id="15">Label with timestamp</span>
+          <span class="icon-time"></span>：<span>Label with timestamp</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="6">Previous line</b><b>：</b><span class="i18n" data-i18n-id="16">Clear previous line’s timestamp</span>
+          <b>Previous line：</b><span>Clear previous line's timestamp</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="7">Reset</b><b>：</b><span class="i18n" data-i18n-id="17">Clear all timestamps</span>
+          <b>Reset：</b><span>Clear all timestamps</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="8">Copy</b><b>：</b><span class="i18n" data-i18n-id="18">Copy all text</span>
+          <b>Copy：</b><span>Copy all text</span>
         </li>
         <li>
-          <b class="i18n" data-i18n-id="9">Export</b><b>：</b><span class="i18n" data-i18n-id="19">Export file</span>
+          <b>Export：</b><span>Export file</span>
         </li>
       </ul>
-      <h3 class="i18n" data-i18n-id="20">Hotkeys</h3>
+      <h3>Hotkeys</h3>
       <ul>
         <li>
-          <span class="badge">Space</span><span>➔</span><span class="i18n" data-i18n-id="21">Label with timestamp</span>
+          <span class="badge">Space</span><span>➔</span><span>Label with timestamp</span>
         </li>
         <li>
-          <span class="badge">Tab</span><span>➔</span><span class="i18n" data-i18n-id="22">Play / Pause</span>
+          <span class="badge">Tab</span><span>➔</span><span>Play / Pause</span>
         </li>
         <li>
-          <span class="badge">Z</span><span>➔</span><span class="i18n" data-i18n-id="6">Previous line</span>
+          <span class="badge">Z</span><span>➔</span><span>Previous line</span>
         </li>
         <li>
-          <span class="badge">B</span><span>➔</span><span class="i18n" data-i18n-id="13">Rewind 5 seconds</span>
+          <span class="badge">B</span><span>➔</span><span>Rewind 5 seconds</span>
         </li>
         <li>
-          <span class="badge">F</span><span>➔</span><span class="i18n" data-i18n-id="14">Fast forward 5 seconds</span>
+          <span class="badge">F</span><span>➔</span><span>Fast forward 5 seconds</span>
         </li>
       </ul>
 
@@ -127,7 +128,7 @@
   <section id="audio-player" class="show">
     <div id="waveform"></div>
     <div id="waveform-controls" class="position-relative d-flex">
-      <div class="tooltip position-absolute i18n" data-i18n-id="23">
+      <div class="tooltip position-absolute">
         Press Play, then tap the clock icon at the desired moment to add a timestamp.
       </div>
       <button class="btn-link">
@@ -141,7 +142,7 @@
         <span class="icon-pause d-none"></span>
         <span class="icon-loading d-none"></span>
       </button>
-      <button id="tag-button" class="btn-circle btn-red i18n-aria-label" aria-label="Label with timestamp" data-i18n-id="15">
+      <button id="tag-button" class="btn-circle btn-red" aria-label="Label with timestamp">
         <span class="icon-time"></span>
       </button>
     </div>
@@ -152,7 +153,7 @@
         <div class="modal-body">
           <p class="modal-text"></p>
         </div>
-        <div class="modal-footer"><button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="25">Close</button></div>
+        <div class="modal-footer"><button type="button" class="btn btn-white" data-dismiss="modal">Close</button></div>
       </div>
     </div>
   </div>
@@ -160,13 +161,13 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="modal-text i18n" data-i18n-id="26">
+          <p class="modal-text">
             You haven't copied or exported yet. Are you sure you want to leave?
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">Cancel</button>
-          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="28">Leave</button>
+          <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-red" data-dismiss="modal">Leave</button>
         </div>
       </div>
     </div>
@@ -176,20 +177,19 @@
       <div class="modal-content">
         <div class="modal-body">
           <form id="song-info-form">
-            <input class="i18n-placeholder" type="text" name="ti" placeholder="Title" data-i18n-id="29">
-            <input class="i18n-placeholder" type="text" name="ar" placeholder="Artist" data-i18n-id="30">
-            <input class="i18n-placeholder" type="text" name="al" placeholder="Album" data-i18n-id="31">
-            <input class="i18n-placeholder" type="text" name="au" placeholder="Author" data-i18n-id="32">
+            <input type="text" name="ti" placeholder="Title">
+            <input type="text" name="ar" placeholder="Artist">
+            <input type="text" name="al" placeholder="Album">
+            <input type="text" name="au" placeholder="Author">
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white i18n" data-dismiss="modal" data-i18n-id="27">Cancel</button>
-          <button type="button" class="btn btn-red i18n" data-dismiss="modal" data-i18n-id="33">Confirm</button>
+          <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-red" data-dismiss="modal">Confirm</button>
         </div>
       </div>
     </div>
   </div>
-  <script src="static/js/locale.js"></script>
   <script src="static/libs/jquery-3.6.0.min.js"></script>
   <script src="static/libs/util.js"></script>
   <script src="static/libs/modal.js"></script>
