@@ -407,9 +407,8 @@ footer {
   -ms-flex-item-align: end;
   align-self: flex-end;
 }
-footer a {
-  font-weight: 600;
-  text-decoration: none;
+footer p {
+  display: inline-block;
 }
 
 /* Modal */
@@ -549,6 +548,43 @@ footer a {
 }
 .tips-wrapper .btn-dark.collapsed .icon-close {
   display: none;
+}
+
+.btn-group {
+  position: relative;
+  display: inline-flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 10px;
+  padding: 2px;
+  width: 76px;
+  height: 26px;
+  background-color: #aaa;
+  border-radius: 60px;
+}
+
+.btn-group > .btn {
+  display: inline-flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  height: 22px;
+  width: 36px;
+  background-color: #fff;
+  color: #aaa;
+  border-radius: 52px;
+  text-decoration: none;
+}
+
+.btn-group > .btn.off {
+  background: transparent;
+  color: #fff;
 }
 
 /* Responsive Design */
